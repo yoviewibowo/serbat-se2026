@@ -342,6 +342,31 @@
 </head>
 <body>
 
+<div id="loadingScreen" style="position:fixed;inset:0;background:linear-gradient(135deg,#FFA726,#FB8C00,#EF6C00);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;color:white;transition:0.4s;">
+
+  <div style="font-size:64px;font-weight:800;letter-spacing:3px;">
+    SERBAT
+  </div>
+
+  <div style="margin-top:10px;font-size:15px;text-align:center;line-height:1.6;opacity:0.95;">
+    Sistem Evaluasi Real-time<br>
+    Berbasis Aktivitas Lapangan
+  </div>
+
+  <div style="margin-top:30px;width:220px;height:10px;background:rgba(255,255,255,0.2);border-radius:999px;overflow:hidden;">
+    <div id="loadingBar" style="width:0%;height:100%;background:white;border-radius:999px;transition:0.3s;"></div>
+  </div>
+
+  <div style="margin-top:18px;font-size:13px;opacity:0.9;">
+    Memuat peta wilayah dan dashboard...
+  </div>
+
+  <div style="position:absolute;bottom:28px;font-size:13px;opacity:0.85;">
+    SERBAT SE2026 by yovie.wibowo
+  </div>
+
+</div>
+
 <div class="login-page" id="loginPage">
   <div class="login-card">
 
@@ -1083,6 +1108,54 @@ window.onload = ()=>{
   }
 
 }
+
+</script>
+
+<script>
+
+const loadingBar = document.getElementById('loadingBar');
+
+let loadingProgress = 0;
+
+const loadingInterval = setInterval(()=>{
+
+  loadingProgress += Math.random()*18;
+
+  if(loadingProgress > 90){
+    loadingProgress = 90;
+  }
+
+  loadingBar.style.width = loadingProgress + '%';
+
+},300);
+
+function hideLoadingScreen(){
+
+  clearInterval(loadingInterval);
+
+  loadingBar.style.width = '100%';
+
+  setTimeout(()=>{
+
+    const loading = document.getElementById('loadingScreen');
+
+    loading.style.opacity = '0';
+
+    setTimeout(()=>{
+      loading.remove();
+    },500);
+
+  },600);
+
+}
+
+window.addEventListener('load',()=>{
+
+  setTimeout(()=>{
+    hideLoadingScreen();
+  },2200);
+
+});
 
 </script>
 
