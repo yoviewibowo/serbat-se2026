@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MOCHIPRO6171</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:
+    radial-gradient(circle at top left,#ffb86b22,transparent 30%),
+    radial-gradient(circle at bottom right,#ff8c4222,transparent 30%),
+    linear-gradient(135deg,#151515,#222222);
+  min-height:100vh;
+  color:white;
+  overflow-x:hidden;
+}
+
+.container{
+  width:100%;
+  max-width:1000px;
+  margin:auto;
+  padding:40px 20px 80px;
+}
+
+.hero{
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.logo{
+  font-size:58px;
+  font-weight:700;
+  background:linear-gradient(90deg,#ffcc70,#ff9f43);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:12px;
+}
+
+.subtitle{
+  opacity:0.8;
+  font-size:15px;
+  line-height:1.8;
+  max-width:700px;
+  margin:auto;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:16px;
+  padding:6px 14px;
+  border-radius:999px;
+  background:rgba(255,179,71,0.12);
+  color:#ffcc70;
+  font-size:12px;
+  border:1px solid rgba(255,179,71,0.15);
+}
+
+.search-container{
+  position:sticky;
+  top:15px;
+  z-index:999;
+  margin-bottom:25px;
+}
+
+.search-input{
+  width:100%;
+  border:none;
+  outline:none;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.08);
+  color:white;
+  font-size:18px;
+  padding:20px 24px;
+  border-radius:24px;
+  transition:0.3s;
+}
+
+.search-input:focus{
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,179,71,0.5);
+  box-shadow:0 0 0 4px rgba(255,179,71,0.15);
+}
+
+.search-input::placeholder{
+  color:#cfcfcf;
+}
+
+.result-info{
+  margin-bottom:20px;
+  opacity:0.75;
+  font-size:14px;
+}
+
+.results{
+  display:grid;
+  gap:18px;
+}
+
+.card{
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  padding:22px;
+  transition:0.25s;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  background:rgba(255,255,255,0.11);
+  border-color:rgba(255,179,71,0.25);
+}
+
+.kode{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(90deg,#ffcc70,#ff9f43);
+  color:#222;
+  font-weight:700;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:13px;
+  margin-bottom:14px;
+}
+
+.profesi{
+  font-size:24px;
+  font-weight:600;
+  margin-bottom:10px;
+  line-height:1.5;
+}
+
+.keyword{
+  opacity:0.7;
+  font-size:14px;
+  line-height:1.8;
+}
+
+.empty{
+  text-align:center;
+  opacity:0.65;
+  margin-top:60px;
+  line-height:1.8;
+}
+
+.loading{
+  text-align:center;
+  margin-top:60px;
+  opacity:0.65;
+}
+
+.footer{
+  margin-top:60px;
+  text-align:center;
+  opacity:0.45;
+  font-size:13px;
+}
+
+@media(max-width:768px){
+
+  .logo{
+    font-size:42px;
+  }
+
+  .profesi{
+    font-size:20px;
+  }
+
+  .search-input{
+    font-size:16px;
+    padding:18px 20px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="hero">
+
+    <div class="logo">
+      🍡 MOCHIPRO6171
+    </div>
+
+    <div class="subtitle">
+      Mesin Otomatis Coding Hasil Isian Profesi<br>
+      Smart Search Kode Profesi SE2026 berbasis keyword dan pencarian cerdas.
+    </div>
+
+    <div class="badge">
+      Powered by Google Spreadsheet
+    </div>
+
+  </div>
+
+  <div class="search-container">
+
+    <input
+      type="text"
+      id="searchInput"
+      class="search-input"
+      placeholder="Cari profesi... contoh: guru, jual online, satpam, kopi, ojek"
+    >
+
+  </div>
+
+  <div class="result-info" id="resultInfo"></div>
+
+  <div class="results" id="results"></div>
+
+  <div class="footer">
+    MOCHIPRO6171 • Smart Coding Profesi SE2026
+  </div>
+
+</div>
+
+<script>
+
+const SHEET_ID = '1IkV4zeEJ0k2P_xdMZGrLrWZrvG-tvahDLO5hRf8yxXQ';
+const SHEET_NAME = 'DATA';
+
+const CSV_URL =
+`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${SHEET_NAME}`;
+
+let database = [];
+
+const searchInput = document.getElementById('searchInput');
+const resultsContainer = document.getElementById('results');
+const resultInfo = document.getElementById('resultInfo');
+
+async function loadData(){
+
+  try{
+
+    resultsContainer.innerHTML =
+      `<div class="loading">🍡 Memuat database profesi...</div>`;
+
+    const response = await fetch(CSV_URL);
+
+    const csvText = await response.text();
+
+    const parsed = Papa.parse(csvText,{
+      header:true,
+      skipEmptyLines:true
+    });
+
+    database = parsed.data.map(item => ({
+      kode: item.kode || '',
+      profesi: item.profesi || '',
+      keyword: item.keyword || ''
+    }));
+
+    resultsContainer.innerHTML = `
+      <div class="empty">
+        🍡 Database profesi berhasil dimuat.<br>
+        Mulai ketik kata kunci pekerjaan untuk mencari rekomendasi profesi.
+      </div>
+    `;
+
+  }catch(error){
+
+    console.error(error);
+
+    resultsContainer.innerHTML = `
+      <div class="empty">
+        Gagal memuat database spreadsheet 😢
+      </div>
+    `;
+
+  }
+
+}
+
+function normalize(text){
+
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\\s]/g,' ')
+    .replace(/\\s+/g,' ')
+    .trim();
+
+}
+
+function calculateScore(query,item){
+
+  query = normalize(query);
+
+  const profesi = normalize(item.profesi);
+  const keyword = normalize(item.keyword);
+
+  let score = 0;
+
+  const queryWords = query.split(' ');
+
+  queryWords.forEach(word=>{
+
+    if(word.length < 2) return;
+
+    if(profesi.includes(word)){
+      score += 15;
+    }
+
+    if(keyword.includes(word)){
+      score += 25;
+    }
+
+    if(item.kode.includes(word)){
+      score += 100;
+    }
+
+  });
+
+  if(profesi.includes(query)){
+    score += 80;
+  }
+
+  if(keyword.includes(query)){
+    score += 120;
+  }
+
+  return score;
+
+}
+
+function search(query){
+
+  if(!query.trim()){
+
+    resultInfo.innerHTML = '';
+
+    resultsContainer.innerHTML = `
+      <div class="empty">
+        🍡 Ketik kata kunci pekerjaan untuk mulai mencari.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  const ranked = database
+    .map(item => ({
+      ...item,
+      score: calculateScore(query,item)
+    }))
+    .filter(item => item.score > 0)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,20);
+
+  renderResults(ranked,query);
+
+}
+
+function renderResults(results,query){
+
+  if(results.length === 0){
+
+    resultInfo.innerHTML = '';
+
+    resultsContainer.innerHTML = `
+      <div class="empty">
+        Tidak ditemukan profesi yang cocok 😢
+      </div>
+    `;
+
+    return;
+
+  }
+
+  resultInfo.innerHTML =
+    `Ditemukan ${results.length} rekomendasi profesi untuk keyword <b>"${query}"</b>`;
+
+  resultsContainer.innerHTML = results.map(item=>`
+
+    <div class="card">
+
+      <div class="kode">
+        ${item.kode}
+      </div>
+
+      <div class="profesi">
+        ${item.profesi}
+      </div>
+
+      <div class="keyword">
+        ${item.keyword || '-'}
+      </div>
+
+    </div>
+
+  `).join('');
+
+}
+
+searchInput.addEventListener('input',(e)=>{
+
+  search(e.target.value);
+
+});
+
+loadData();
+
+</script>
+
+</body>
+</html>
