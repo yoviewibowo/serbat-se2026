@@ -921,13 +921,19 @@ function renderValidation(){
 async function submitPresence(type){
 
   if(!currentLat || !currentLng){
+
     alert('GPS belum tersedia');
     return;
+
   }
 
-  const user = JSON.parse(localStorage.getItem('serbat_user'));
+  const user = JSON.parse(
+    localStorage.getItem('serbat_user')
+  );
 
   const payload = {
+
+    action:'submit_presence',
 
     ppl_id:user.ppl_id,
     nama:user.nama,
@@ -935,50 +941,84 @@ async function submitPresence(type){
 
     jenis_presensi:type,
 
-    activity_id:document.getElementById('activityType').value,
+    activity_id:
+    document.getElementById(
+      'activityType'
+    ).value,
 
     latitude:currentLat,
     longitude:currentLng,
+
     gps_accuracy:currentAccuracy,
 
     validation_status:validationStatus,
 
-    idsubsls_detected:detectedIDSUBSLS,
-    idsubsls_expected:detectedIDSUBSLS,
+    idsubsls_detected:
+    detectedIDSUBSLS,
+
+    idsubsls_expected:
+    detectedIDSUBSLS,
 
     distance_meter:0,
 
-    invalid_reason:document.getElementById('invalidReason').value,
+    invalid_reason:
+    document.getElementById(
+      'invalidReason'
+    ).value,
 
-    keluarga_done:document.getElementById('keluargaDone').value || 0,
-    usaha_done:document.getElementById('usahaDone').value || 0,
+    keluarga_done:
+    document.getElementById(
+      'keluargaDone'
+    ).value || 0,
 
-    notes:document.getElementById('notes').value,
+    usaha_done:
+    document.getElementById(
+      'usahaDone'
+    ).value || 0,
+
+    notes:
+    document.getElementById(
+      'notes'
+    ).value,
 
     user_agent:navigator.userAgent,
+
     device_info:navigator.platform
 
   };
 
   try{
 
+    // =========================
+    // GET QUERYSTRING
+    // =========================
+
+    const query =
+      new URLSearchParams(payload);
+
     const response = await fetch(
-      APPS_SCRIPT_URL + '?action=submit_presence',
+
+      APPS_SCRIPT_URL +
+      '?' +
+      query.toString(),
+
       {
-        method:'POST',
-        mode:'cors',
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify(payload)
+        method:'GET',
+        mode:'cors'
       }
+
     );
 
-    const result = await response.json();
+    const result =
+      await response.json();
+
+    console.log(result);
 
     if(result.status){
 
-      alert(`Presensi ${type} berhasil direkam`);
+      alert(
+        `Presensi ${type} berhasil`
+      );
 
       loadDashboard();
       loadMonitoring();
@@ -987,14 +1027,24 @@ async function submitPresence(type){
     }
 
     else{
-      alert(result.message || 'Submit gagal');
+
+      alert(
+        result.message ||
+        'Submit gagal'
+      );
+
     }
 
   }
 
   catch(err){
+
     console.error(err);
-    alert('Submit gagal');
+
+    alert(
+      'Gagal submit presensi'
+    );
+
   }
 
 }
