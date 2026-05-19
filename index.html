@@ -1,695 +1,868 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SERBAT SE2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>SERBAT SE2026 Mobile</title>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --primary:#F57C00;
-      --primary-dark:#E65100;
-      --secondary:#FFB74D;
-      --bg:#F4F7FB;
-      --card:#ffffff;
-      --text:#1E293B;
-      --muted:#64748B;
-      --border:#E2E8F0;
-      --success:#22C55E;
-      --warning:#FACC15;
-      --danger:#EF4444;
-      --sidebar:#1E293B;
-      --shadow:0 10px 30px rgba(0,0,0,0.08);
-      --radius:24px;
-    }
+<style>
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Inter',sans-serif;
-    }
+:root{
+  --primary:#F57C00;
+  --primary-dark:#E65100;
+  --secondary:#FFB74D;
+  --bg:#F4F7FB;
+  --card:#FFFFFF;
+  --text:#1E293B;
+  --muted:#64748B;
+  --border:#E2E8F0;
+  --success:#22C55E;
+  --danger:#EF4444;
+  --warning:#FACC15;
+  --shadow:0 10px 30px rgba(0,0,0,0.08);
+  --radius:26px;
+}
 
-    body{
-      background:var(--bg);
-      color:var(--text);
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
 
-    .hidden{display:none!important;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
 
-    .login-page{
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:24px;
-      background:linear-gradient(135deg,#FFA726,#FB8C00,#EF6C00);
-    }
+/* =========================
+LOADING
+========================= */
 
-    .login-card{
-      width:100%;
-      max-width:420px;
-      background:rgba(255,255,255,0.95);
-      backdrop-filter:blur(12px);
-      border-radius:32px;
-      padding:36px;
-      box-shadow:0 20px 50px rgba(0,0,0,0.2);
-    }
+#loadingScreen{
+  position:fixed;
+  inset:0;
+  background:
+  linear-gradient(
+    135deg,
+    #FFA726,
+    #FB8C00,
+    #EF6C00
+  );
 
-    .brand{text-align:center;margin-bottom:28px;}
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 
-    .brand h1{
-      font-size:54px;
-      color:var(--primary-dark);
-      font-weight:800;
-      letter-spacing:2px;
-    }
+  color:white;
 
-    .brand p{
-      margin-top:10px;
-      color:#666;
-      line-height:1.6;
-      font-size:14px;
-    }
+  z-index:99999;
 
-    .form-group{margin-bottom:18px;}
+  transition:0.5s;
+}
 
-    .form-group label{
-      display:block;
-      margin-bottom:8px;
-      font-size:14px;
-      font-weight:600;
-    }
+.loading-logo{
+  font-size:64px;
+  font-weight:800;
+  letter-spacing:3px;
+}
 
-    .form-group input,
-    .form-group select,
-    .form-group textarea{
-      width:100%;
-      padding:14px 16px;
-      border-radius:18px;
-      border:1px solid var(--border);
-      outline:none;
-      font-size:14px;
-    }
+.loading-sub{
+  margin-top:10px;
+  text-align:center;
+  line-height:1.7;
+  font-size:14px;
+}
 
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus{
-      border-color:var(--primary);
-      box-shadow:0 0 0 4px rgba(245,124,0,0.15);
-    }
+.loading-bar-wrap{
+  width:220px;
+  height:10px;
+  background:rgba(255,255,255,0.2);
+  border-radius:999px;
+  margin-top:28px;
+  overflow:hidden;
+}
 
-    .btn{
-      border:none;
-      cursor:pointer;
-      border-radius:18px;
-      padding:14px 18px;
-      font-size:14px;
-      font-weight:700;
-      transition:0.2s;
-    }
+.loading-bar{
+  width:0%;
+  height:100%;
+  background:white;
+  border-radius:999px;
+  transition:0.3s;
+}
 
-    .btn-primary{
-      background:var(--primary);
-      color:white;
-      width:100%;
-    }
+.loading-footer{
+  position:absolute;
+  bottom:28px;
+  font-size:13px;
+  opacity:0.9;
+}
 
-    .btn-primary:hover{background:var(--primary-dark);}
+/* =========================
+LOGIN
+========================= */
 
-    .app{display:none;min-height:100vh;}
+.login-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
 
-    .sidebar{
-      width:260px;
-      position:fixed;
-      top:0;
-      left:0;
-      bottom:0;
-      background:var(--sidebar);
-      color:white;
-      padding:24px;
-      overflow-y:auto;
-    }
+  background:
+  linear-gradient(
+    135deg,
+    #FFA726,
+    #FB8C00,
+    #EF6C00
+  );
+}
 
-    .sidebar h2{
-      font-size:36px;
-      color:#FFA726;
-      font-weight:800;
-      margin-bottom:8px;
-    }
+.login-card{
+  width:100%;
+  max-width:420px;
 
-    .sidebar p{
-      color:#CBD5E1;
-      font-size:13px;
-      line-height:1.5;
-      margin-bottom:30px;
-    }
+  background:rgba(255,255,255,0.95);
 
-    .menu{display:flex;flex-direction:column;gap:10px;}
+  border-radius:34px;
 
-    .menu button{
-      border:none;
-      background:transparent;
-      color:white;
-      text-align:left;
-      padding:14px 16px;
-      border-radius:16px;
-      cursor:pointer;
-      font-weight:600;
-    }
+  padding:36px;
 
-    .menu button:hover,
-    .menu button.active{
-      background:rgba(255,255,255,0.12);
-    }
+  box-shadow:0 20px 50px rgba(0,0,0,0.18);
+}
 
-    .main{
-      margin-left:260px;
-      padding:24px;
-    }
+.brand{
+  text-align:center;
+  margin-bottom:30px;
+}
 
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:24px;
-    }
+.brand h1{
+  font-size:54px;
+  color:var(--primary-dark);
+  font-weight:800;
+}
 
-    .topbar h1{
-      font-size:30px;
-      color:var(--primary-dark);
-      font-weight:800;
-    }
+.brand p{
+  margin-top:10px;
+  color:#666;
+  font-size:14px;
+  line-height:1.7;
+}
 
-    .topbar p{
-      margin-top:4px;
-      color:var(--muted);
-      font-size:14px;
-    }
+.form-group{
+  margin-bottom:18px;
+}
 
-    .section{display:none;}
-    .section.active{display:block;}
+.form-group label{
+  display:block;
+  margin-bottom:8px;
+  font-size:14px;
+  font-weight:600;
+}
 
-    .stats-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:18px;
-      margin-bottom:24px;
-    }
+.form-group input,
+.form-group select,
+.form-group textarea{
 
-    .stat-card,
-    .card{
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-    }
+  width:100%;
 
-    .stat-card{
-      padding:20px;
-      position:relative;
-      overflow:hidden;
-    }
+  border:1px solid var(--border);
 
-    .stat-card::before{
-      content:'';
-      position:absolute;
-      top:0;
-      left:0;
-      width:100%;
-      height:6px;
-      background:linear-gradient(90deg,var(--primary),var(--secondary));
-    }
+  border-radius:18px;
 
-    .stat-title{
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:10px;
-    }
+  padding:14px 16px;
 
-    .stat-value{
-      font-size:30px;
-      font-weight:800;
-    }
+  outline:none;
 
-    .card{
-      padding:22px;
-      margin-bottom:24px;
-    }
+  font-size:14px;
 
-    .section-title{
-      font-size:18px;
-      font-weight:700;
-      margin-bottom:18px;
-      color:var(--primary-dark);
-    }
+}
 
-    #map,#dashboardMap{
-      width:100%;
-      height:450px;
-      border-radius:22px;
-    }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
 
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:16px;
-      margin-bottom:20px;
-    }
+  border-color:var(--primary);
 
-    .info-box{
-      background:#FFF7ED;
-      border:1px solid #FED7AA;
-      border-radius:20px;
-      padding:16px;
-    }
+  box-shadow:
+  0 0 0 4px rgba(245,124,0,0.15);
 
-    .info-box small{
-      display:block;
-      color:#9A3412;
-      margin-bottom:6px;
-      font-size:12px;
-    }
+}
 
-    .presence-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      margin-top:18px;
-    }
+.btn{
 
-    .btn-start{background:var(--success);color:white;}
-    .btn-end{background:var(--danger);color:white;}
+  border:none;
 
-    .status-pill{
-      display:inline-flex;
-      padding:8px 14px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:700;
-    }
+  cursor:pointer;
 
-    .valid{background:#DCFCE7;color:#166534;}
-    .warning{background:#FEF9C3;color:#854D0E;}
-    .invalid{background:#FEE2E2;color:#991B1B;}
+  border-radius:18px;
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-    }
+  padding:15px 18px;
 
-    table th,
-    table td{
-      padding:14px;
-      border-bottom:1px solid #E2E8F0;
-      font-size:14px;
-      text-align:left;
-    }
+  font-size:14px;
 
-    table th{
-      background:#FFF7ED;
-      color:#9A3412;
-    }
+  font-weight:700;
 
-    .chart-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:20px;
-    }
+  transition:0.2s;
 
-    @media(max-width:768px){
-      .sidebar{
-        position:relative;
-        width:100%;
-      }
+}
 
-      .main{margin-left:0;}
+.btn-primary{
+  background:var(--primary);
+  color:white;
+  width:100%;
+}
 
-      .presence-grid,
-      .chart-grid{
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
+.btn-primary:hover{
+  background:var(--primary-dark);
+}
+
+/* =========================
+APP
+========================= */
+
+.app{
+  display:none;
+  padding:18px;
+}
+
+.topbar{
+
+  background:
+  linear-gradient(
+    135deg,
+    #FFA726,
+    #FB8C00
+  );
+
+  border-radius:28px;
+
+  padding:24px;
+
+  color:white;
+
+  box-shadow:var(--shadow);
+
+  margin-bottom:18px;
+}
+
+.topbar h1{
+  font-size:34px;
+  font-weight:800;
+}
+
+.topbar p{
+  margin-top:10px;
+  line-height:1.7;
+  font-size:14px;
+  opacity:0.95;
+}
+
+.card{
+
+  background:var(--card);
+
+  border-radius:28px;
+
+  padding:22px;
+
+  margin-bottom:18px;
+
+  box-shadow:var(--shadow);
+
+}
+
+.section-title{
+
+  font-size:18px;
+
+  font-weight:700;
+
+  color:var(--primary-dark);
+
+  margin-bottom:18px;
+
+}
+
+.info-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
+  gap:14px;
+
+}
+
+.info-box{
+
+  background:#FFF7ED;
+
+  border:1px solid #FED7AA;
+
+  border-radius:20px;
+
+  padding:16px;
+
+}
+
+.info-box small{
+
+  display:block;
+
+  font-size:12px;
+
+  color:#9A3412;
+
+  margin-bottom:6px;
+
+}
+
+.info-box strong{
+
+  font-size:15px;
+
+  color:#7C2D12;
+
+}
+
+.status-pill{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:10px 16px;
+
+  border-radius:999px;
+
+  font-size:13px;
+
+  font-weight:700;
+
+}
+
+.valid{
+  background:#DCFCE7;
+  color:#166534;
+}
+
+.warning{
+  background:#FEF9C3;
+  color:#854D0E;
+}
+
+.invalid{
+  background:#FEE2E2;
+  color:#991B1B;
+}
+
+.presence-grid{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:14px;
+
+  margin-top:20px;
+
+}
+
+.btn-start{
+  background:var(--success);
+  color:white;
+}
+
+.btn-end{
+  background:var(--danger);
+  color:white;
+}
+
+.footer{
+
+  text-align:center;
+
+  margin-top:20px;
+
+  color:#64748B;
+
+  font-size:13px;
+
+  padding-bottom:20px;
+
+}
+
+.hidden{
+  display:none !important;
+}
+
+@media(max-width:480px){
+
+  .presence-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
 </head>
 <body>
 
-<div id="loadingScreen" style="position:fixed;inset:0;background:linear-gradient(135deg,#FFA726,#FB8C00,#EF6C00);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;color:white;transition:0.4s;">
+<!-- =========================
+LOADING
+========================= -->
 
-  <div style="font-size:64px;font-weight:800;letter-spacing:3px;">
+<div id="loadingScreen">
+
+  <div class="loading-logo">
     SERBAT
   </div>
 
-  <div style="margin-top:10px;font-size:15px;text-align:center;line-height:1.6;opacity:0.95;">
+  <div class="loading-sub">
     Sistem Evaluasi Real-time<br>
     Berbasis Aktivitas Lapangan
   </div>
 
-  <div style="margin-top:30px;width:220px;height:10px;background:rgba(255,255,255,0.2);border-radius:999px;overflow:hidden;">
-    <div id="loadingBar" style="width:0%;height:100%;background:white;border-radius:999px;transition:0.3s;"></div>
+  <div class="loading-bar-wrap">
+    <div
+      class="loading-bar"
+      id="loadingBar"
+    ></div>
   </div>
 
-  <div style="margin-top:18px;font-size:13px;opacity:0.9;">
-    Memuat peta wilayah dan dashboard...
-  </div>
-
-  <div style="position:absolute;bottom:28px;font-size:13px;opacity:0.85;">
+  <div class="loading-footer">
     SERBAT SE2026 by yovie.wibowo
   </div>
 
 </div>
 
-<div class="login-page" id="loginPage">
+<!-- =========================
+LOGIN
+========================= -->
+
+<div
+  class="login-page"
+  id="loginPage"
+>
+
   <div class="login-card">
 
     <div class="brand">
+
       <h1>SERBAT</h1>
+
       <p>
         Sistem Evaluasi Real-time<br>
         Berbasis Aktivitas Lapangan
       </p>
+
     </div>
 
     <div class="form-group">
+
       <label>ID Petugas</label>
-      <input type="text" id="pplId" placeholder="Contoh: PPL001">
+
+      <input
+        type="text"
+        id="pplId"
+        placeholder="Contoh: PPL001"
+      >
+
     </div>
 
     <div class="form-group">
+
       <label>Password</label>
-      <input type="password" id="password">
+
+      <input
+        type="password"
+        id="password"
+      >
+
     </div>
 
-    <button class="btn btn-primary" onclick="login()">
+    <button
+      class="btn btn-primary"
+      onclick="login()"
+    >
+
       Login SERBAT
+
     </button>
 
   </div>
+
 </div>
 
-<div class="app" id="app">
+<!-- =========================
+APP
+========================= -->
 
-  <div class="sidebar">
+<div
+  class="app"
+  id="app"
+>
 
-    <h2>SERBAT</h2>
+  <!-- TOPBAR -->
 
-    <p>
-      Sistem Evaluasi Real-time
-      Berbasis Aktivitas Lapangan
+  <div class="topbar">
+
+    <h1>SERBAT</h1>
+
+    <p id="welcomeText">
+      Selamat datang
     </p>
 
-    <div class="menu">
+  </div>
 
-      <button class="active" onclick="showSection('dashboard',this)">
-        Dashboard
-      </button>
+  <!-- GPS -->
 
-      <button onclick="showSection('presensi',this)">
-        Presensi
-      </button>
+  <div class="card">
 
-      <button onclick="showSection('monitoring',this)">
-        Monitoring
-      </button>
+    <div class="section-title">
+      Status GPS
+    </div>
 
-      <button onclick="showSection('risk',this)">
-        Risk Monitoring
-      </button>
+    <div class="info-grid">
 
-      <button onclick="logout()">
-        Logout
+      <div class="info-box">
+
+        <small>Latitude</small>
+
+        <strong id="latText">
+          -
+        </strong>
+
+      </div>
+
+      <div class="info-box">
+
+        <small>Longitude</small>
+
+        <strong id="lngText">
+          -
+        </strong>
+
+      </div>
+
+      <div class="info-box">
+
+        <small>Akurasi</small>
+
+        <strong id="accuracyText">
+          -
+        </strong>
+
+      </div>
+
+      <div class="info-box">
+
+        <small>IDSUBSLS</small>
+
+        <strong id="idsubslsText">
+          -
+        </strong>
+
+      </div>
+
+    </div>
+
+    <div style="margin-top:18px;">
+
+      <div id="validationBadge"></div>
+
+    </div>
+
+    <div style="margin-top:18px;">
+
+      <button
+        class="btn btn-primary"
+        onclick="refreshLocation()"
+      >
+
+        Refresh GPS
+
       </button>
 
     </div>
 
   </div>
 
-  <div class="main">
+  <!-- AKTIVITAS -->
 
-    <div class="topbar">
+  <div class="card">
 
-      <div>
-        <h1>SERBAT SE2026</h1>
-        <p id="welcomeText">Selamat datang</p>
-      </div>
+    <div class="section-title">
+      Aktivitas Lapangan
+    </div>
 
-      <button class="btn btn-primary" style="width:auto;" onclick="refreshLocation()">
-        Refresh GPS
+    <div class="form-group">
+
+      <label>Jenis Aktivitas</label>
+
+      <select id="activityType">
+
+        <option value="PK">
+          Pemutakhiran Keluarga
+        </option>
+
+        <option value="PU">
+          Pemutakhiran Usaha
+        </option>
+
+        <option value="DK">
+          Pendataan Keluarga
+        </option>
+
+        <option value="DU">
+          Pendataan Usaha
+        </option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Jumlah Keluarga</label>
+
+      <input
+        type="number"
+        id="keluargaDone"
+      >
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Jumlah Usaha</label>
+
+      <input
+        type="number"
+        id="usahaDone"
+      >
+
+    </div>
+
+    <div
+      class="form-group hidden"
+      id="invalidReasonWrapper"
+    >
+
+      <label>Alasan Invalid</label>
+
+      <select id="invalidReason">
+
+        <option value="">
+          Pilih alasan
+        </option>
+
+        <option value="SNL">
+          Sinyal GPS Lemah
+        </option>
+
+        <option value="KRT">
+          Koordinasi RT
+        </option>
+
+        <option value="AMS">
+          Akses Sulit
+        </option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Catatan</label>
+
+      <textarea id="notes"></textarea>
+
+    </div>
+
+    <div class="presence-grid">
+
+      <button
+        class="btn btn-start"
+        onclick="submitPresence('MULAI')"
+      >
+
+        Presensi Mulai
+
+      </button>
+
+      <button
+        class="btn btn-end"
+        onclick="submitPresence('SELESAI')"
+      >
+
+        Presensi Selesai
+
       </button>
 
     </div>
 
-    <div class="section active" id="dashboardSection">
+  </div>
 
-      <div class="stats-grid">
+  <!-- FOOTER -->
 
-        <div class="stat-card">
-          <div class="stat-title">Petugas Aktif</div>
-          <div class="stat-value" id="activeCount">0</div>
-        </div>
+  <div class="footer">
 
-        <div class="stat-card">
-          <div class="stat-title">Presensi Valid</div>
-          <div class="stat-value" id="validCount">0</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-title">Warning GPS</div>
-          <div class="stat-value" id="warningCount">0</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-title">Invalid GPS</div>
-          <div class="stat-value" id="invalidCount">0</div>
-        </div>
-
-      </div>
-
-      <div class="card">
-        <div class="section-title">Live Monitoring Map</div>
-        <div id="dashboardMap"></div>
-      </div>
-
-      <div class="chart-grid">
-
-        <div class="card">
-          <div class="section-title">Aktivitas Lapangan</div>
-          <canvas id="activityChart"></canvas>
-        </div>
-
-        <div class="card">
-          <div class="section-title">Validasi GPS</div>
-          <canvas id="gpsChart"></canvas>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="section" id="presensiSection">
-
-      <div class="card">
-        <div class="section-title">Peta Lokasi</div>
-        <div id="map"></div>
-      </div>
-
-      <div class="card">
-
-        <div class="section-title">Informasi GPS</div>
-
-        <div class="info-grid">
-
-          <div class="info-box">
-            <small>Latitude</small>
-            <strong id="latText">-</strong>
-          </div>
-
-          <div class="info-box">
-            <small>Longitude</small>
-            <strong id="lngText">-</strong>
-          </div>
-
-          <div class="info-box">
-            <small>Akurasi GPS</small>
-            <strong id="accuracyText">-</strong>
-          </div>
-
-          <div class="info-box">
-            <small>IDSUBSLS</small>
-            <strong id="idsubslsText">-</strong>
-          </div>
-
-        </div>
-
-        <div id="validationBadge"></div>
-
-      </div>
-
-      <div class="card">
-
-        <div class="section-title">Aktivitas Lapangan</div>
-
-        <div class="form-group">
-          <label>Jenis Aktivitas</label>
-
-          <select id="activityType">
-            <option value="PK">Pemutakhiran Keluarga</option>
-            <option value="PU">Pemutakhiran Usaha</option>
-            <option value="DK">Pendataan Keluarga</option>
-            <option value="DU">Pendataan Usaha</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Jumlah Keluarga</label>
-          <input type="number" id="keluargaDone">
-        </div>
-
-        <div class="form-group">
-          <label>Jumlah Usaha</label>
-          <input type="number" id="usahaDone">
-        </div>
-
-        <div class="form-group hidden" id="invalidReasonWrapper">
-
-          <label>Alasan Invalid</label>
-
-          <select id="invalidReason">
-            <option value="">Pilih alasan</option>
-            <option value="SNL">Sinyal GPS Lemah</option>
-            <option value="KRT">Koordinasi RT</option>
-            <option value="AMS">Akses Sulit</option>
-          </select>
-
-        </div>
-
-        <div class="form-group">
-          <label>Catatan</label>
-          <textarea id="notes"></textarea>
-        </div>
-
-        <div class="presence-grid">
-
-          <button class="btn btn-start" onclick="submitPresence('MULAI')">
-            Presensi Mulai
-          </button>
-
-          <button class="btn btn-end" onclick="submitPresence('SELESAI')">
-            Presensi Selesai
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="section" id="monitoringSection">
-
-      <div class="card">
-        <div class="section-title">Monitoring Petugas</div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Nama</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Last Seen</th>
-            </tr>
-          </thead>
-
-          <tbody id="monitoringTableBody"></tbody>
-
-        </table>
-      </div>
-
-    </div>
-
-    <div class="section" id="riskSection">
-
-      <div class="card">
-
-        <div class="section-title">Risk Monitoring</div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Nama</th>
-              <th>Role</th>
-              <th>Risk Score</th>
-              <th>Risk Level</th>
-            </tr>
-          </thead>
-
-          <tbody id="riskTableBody"></tbody>
-
-        </table>
-
-      </div>
-
-    </div>
+    SERBAT SE2026 by yovie.wibowo
 
   </div>
 
 </div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz_X6U4krnGxFAc0PzZGdfE1Z9ablltBh3DHgq4r7UAtpCqMi6Zj7O2KOJv8F4760JI/exec';
+/* =========================
+CONFIG
+========================= */
 
-const GEOJSON_URL = 'https://raw.githubusercontent.com/yoviewibowo/repowilkerstat6171/main/final_subsls_6171_2025-1.geojson';
+const APPS_SCRIPT_URL =
+'https://script.google.com/macros/s/AKfycbz_X6U4krnGxFAc0PzZGdfE1Z9ablltBh3DHgq4r7UAtpCqMi6Zj7O2KOJv8F4760JI/exec';
 
-let map;
-let dashboardMap;
-let marker;
-let geojsonData;
-let currentLat;
-let currentLng;
-let currentAccuracy;
+/* =========================
+GLOBAL
+========================= */
+
+let currentLat = null;
+let currentLng = null;
+let currentAccuracy = null;
+
 let validationStatus = 'UNKNOWN';
+
 let detectedIDSUBSLS = '-';
 
-let activityChart;
-let gpsChart;
+/* =========================
+LOADING
+========================= */
+
+const loadingBar =
+document.getElementById(
+  'loadingBar'
+);
+
+let loadingProgress = 0;
+
+const loadingInterval =
+setInterval(()=>{
+
+  loadingProgress +=
+  Math.random()*20;
+
+  if(loadingProgress > 90){
+
+    loadingProgress = 90;
+
+  }
+
+  loadingBar.style.width =
+  loadingProgress + '%';
+
+},300);
+
+window.addEventListener('load',()=>{
+
+  setTimeout(()=>{
+
+    clearInterval(
+      loadingInterval
+    );
+
+    loadingBar.style.width =
+    '100%';
+
+    setTimeout(()=>{
+
+      document
+      .getElementById(
+        'loadingScreen'
+      )
+      .style.opacity = '0';
+
+      setTimeout(()=>{
+
+        document
+        .getElementById(
+          'loadingScreen'
+        )
+        .remove();
+
+      },500);
+
+    },500);
+
+  },1500);
+
+});
+
+/* =========================
+LOGIN
+========================= */
 
 async function login(){
 
-  const pplId = document.getElementById('pplId').value;
-  const password = document.getElementById('password').value;
+  const pplId =
+    document.getElementById(
+      'pplId'
+    ).value;
+
+  const password =
+    document.getElementById(
+      'password'
+    ).value;
 
   if(!pplId || !password){
+
     alert('Lengkapi login');
     return;
+
   }
 
   try{
 
-    const response = await fetch(
-      `${APPS_SCRIPT_URL}?action=login&ppl_id=${encodeURIComponent(pplId)}&password=${encodeURIComponent(password)}`,
-      {
-        method:'GET',
-        mode:'cors'
-      }
-    );
+    const response =
+      await fetch(
 
-    const result = await response.json();
+        `${APPS_SCRIPT_URL}?action=login&ppl_id=${encodeURIComponent(pplId)}&password=${encodeURIComponent(password)}`,
+
+        {
+          method:'GET',
+          mode:'cors'
+        }
+
+      );
+
+    const result =
+      await response.json();
+
+    console.log(result);
 
     if(result.status){
 
       localStorage.setItem(
+
         'serbat_user',
-        JSON.stringify(result.data)
+
+        JSON.stringify(
+          result.data
+        )
+
       );
 
       showApp();
@@ -697,177 +870,185 @@ async function login(){
     }
 
     else{
-      alert(result.message || 'Login gagal');
+
+      alert(
+        result.message ||
+        'Login gagal'
+      );
+
     }
 
   }
 
   catch(err){
+
     console.error(err);
-    alert('Koneksi Apps Script gagal');
+
+    alert(
+      'Koneksi server gagal'
+    );
+
   }
 
 }
 
 function showApp(){
 
-  document.getElementById('loginPage').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
+  document
+  .getElementById(
+    'loginPage'
+  )
+  .style.display = 'none';
 
-  const user = JSON.parse(localStorage.getItem('serbat_user'));
+  document
+  .getElementById(
+    'app'
+  )
+  .style.display = 'block';
 
-  document.getElementById('welcomeText').innerText = `${user.nama} • ${user.role}`;
+  const user =
+    JSON.parse(
 
-  initMap();
-  initDashboardMap();
-  initCharts();
+      localStorage.getItem(
+        'serbat_user'
+      )
 
-  loadGeoJSON();
+    );
+
+  document
+  .getElementById(
+    'welcomeText'
+  )
+  .innerHTML = `
+
+    ${user.nama}<br>
+    ${user.role}
+
+  `;
+
   getLocation();
-  loadDashboard();
-  loadMonitoring();
-  loadRisk();
 
 }
 
 function logout(){
-  localStorage.removeItem('serbat_user');
+
+  localStorage.removeItem(
+    'serbat_user'
+  );
+
   location.reload();
-}
-
-function showSection(section,el){
-
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
-
-  document.getElementById(section+'Section').classList.add('active');
-
-  if(el){
-    el.classList.add('active');
-  }
 
 }
 
-function initMap(){
-
-  map = L.map('map').setView([-0.0263,109.3425],15);
-
-  L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {attribution:'© OpenStreetMap'}
-  ).addTo(map);
-
-}
-
-function initDashboardMap(){
-
-  dashboardMap = L.map('dashboardMap').setView([-0.0263,109.3425],12);
-
-  L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {attribution:'© OpenStreetMap'}
-  ).addTo(dashboardMap);
-
-}
-
-async function loadGeoJSON(){
-
-  try{
-
-    const response = await fetch(GEOJSON_URL);
-    geojsonData = await response.json();
-
-  }
-
-  catch(err){
-    console.error(err);
-  }
-
-}
+/* =========================
+GPS
+========================= */
 
 function refreshLocation(){
+
   getLocation();
+
 }
 
 function getLocation(){
 
-  navigator.geolocation.getCurrentPosition(
+  navigator.geolocation
+  .getCurrentPosition(
+
     successLocation,
+
     errorLocation,
+
     {
       enableHighAccuracy:true,
       timeout:10000,
       maximumAge:0
     }
+
   );
 
 }
 
 function successLocation(position){
 
-  currentLat = position.coords.latitude;
-  currentLng = position.coords.longitude;
-  currentAccuracy = position.coords.accuracy;
+  currentLat =
+    position.coords.latitude;
 
-  document.getElementById('latText').innerText = currentLat.toFixed(6);
-  document.getElementById('lngText').innerText = currentLng.toFixed(6);
-  document.getElementById('accuracyText').innerText = Math.round(currentAccuracy) + 'm';
+  currentLng =
+    position.coords.longitude;
 
-  if(marker){
-    map.removeLayer(marker);
-  }
+  currentAccuracy =
+    position.coords.accuracy;
 
-  marker = L.marker([currentLat,currentLng]).addTo(map);
+  document
+  .getElementById(
+    'latText'
+  )
+  .innerText =
+    currentLat.toFixed(6);
 
-  map.setView([currentLat,currentLng],18);
+  document
+  .getElementById(
+    'lngText'
+  )
+  .innerText =
+    currentLng.toFixed(6);
 
-  validateLocation();
+  document
+  .getElementById(
+    'accuracyText'
+  )
+  .innerText =
+    Math.round(
+      currentAccuracy
+    ) + 'm';
+
+  // sementara dummy
+  detectedIDSUBSLS =
+    '6171010001';
+
+  document
+  .getElementById(
+    'idsubslsText'
+  )
+  .innerText =
+    detectedIDSUBSLS;
+
+  validateGPS();
 
 }
 
 function errorLocation(error){
+
   console.error(error);
-  alert('GPS gagal diakses');
+
+  alert(
+    'GPS gagal diakses'
+  );
+
 }
 
-function validateLocation(){
+/* =========================
+VALIDASI
+========================= */
 
-  if(!geojsonData){
-    validationStatus = 'WARNING';
-    renderValidation();
-    return;
+function validateGPS(){
+
+  if(currentAccuracy <= 30){
+
+    validationStatus = 'VALID';
+
   }
 
-  const point = turf.point([currentLng,currentLat]);
+  else if(currentAccuracy <= 50){
 
-  let found = false;
+    validationStatus = 'WARNING';
 
-  geojsonData.features.forEach(feature=>{
+  }
 
-    if(found)return;
+  else{
 
-    const polygon = turf.feature(feature.geometry);
-
-    const inside = turf.booleanPointInPolygon(point,polygon);
-
-    if(inside){
-
-      found = true;
-      validationStatus = 'VALID';
-      detectedIDSUBSLS = feature.properties.idsubsls || '-';
-
-    }
-
-  });
-
-  if(!found){
-
-    if(currentAccuracy <= 50){
-      validationStatus = 'WARNING';
-    }
-    else{
-      validationStatus = 'INVALID';
-    }
+    validationStatus = 'INVALID';
 
   }
 
@@ -877,59 +1058,105 @@ function validateLocation(){
 
 function renderValidation(){
 
-  const badge = document.getElementById('validationBadge');
+  const badge =
+    document.getElementById(
+      'validationBadge'
+    );
 
   badge.innerHTML = '';
 
-  const pill = document.createElement('div');
+  const pill =
+    document.createElement('div');
 
-  pill.classList.add('status-pill');
+  pill.classList.add(
+    'status-pill'
+  );
 
   if(validationStatus === 'VALID'){
 
-    pill.classList.add('valid');
-    pill.innerHTML = 'VALID';
+    pill.classList.add(
+      'valid'
+    );
 
-    document.getElementById('invalidReasonWrapper').classList.add('hidden');
+    pill.innerHTML =
+      'VALID GPS';
+
+    document
+    .getElementById(
+      'invalidReasonWrapper'
+    )
+    .classList.add(
+      'hidden'
+    );
 
   }
 
-  else if(validationStatus === 'WARNING'){
+  else if(
+    validationStatus === 'WARNING'
+  ){
 
-    pill.classList.add('warning');
-    pill.innerHTML = 'WARNING';
+    pill.classList.add(
+      'warning'
+    );
 
-    document.getElementById('invalidReasonWrapper').classList.add('hidden');
+    pill.innerHTML =
+      'WARNING GPS';
+
+    document
+    .getElementById(
+      'invalidReasonWrapper'
+    )
+    .classList.add(
+      'hidden'
+    );
 
   }
 
   else{
 
-    pill.classList.add('invalid');
-    pill.innerHTML = 'INVALID';
+    pill.classList.add(
+      'invalid'
+    );
 
-    document.getElementById('invalidReasonWrapper').classList.remove('hidden');
+    pill.innerHTML =
+      'INVALID GPS';
+
+    document
+    .getElementById(
+      'invalidReasonWrapper'
+    )
+    .classList.remove(
+      'hidden'
+    );
 
   }
 
   badge.appendChild(pill);
 
-  document.getElementById('idsubslsText').innerText = detectedIDSUBSLS;
-
 }
+
+/* =========================
+SUBMIT
+========================= */
 
 async function submitPresence(type){
 
   if(!currentLat || !currentLng){
 
     alert('GPS belum tersedia');
+
     return;
 
   }
 
-  const user = JSON.parse(
-    localStorage.getItem('serbat_user')
-  );
+  const user =
+    JSON.parse(
+
+      localStorage.getItem(
+        'serbat_user'
+      )
+
+    );
 
   const payload = {
 
@@ -951,7 +1178,8 @@ async function submitPresence(type){
 
     gps_accuracy:currentAccuracy,
 
-    validation_status:validationStatus,
+    validation_status:
+    validationStatus,
 
     idsubsls_detected:
     detectedIDSUBSLS,
@@ -981,33 +1209,34 @@ async function submitPresence(type){
       'notes'
     ).value,
 
-    user_agent:navigator.userAgent,
+    user_agent:
+    navigator.userAgent,
 
-    device_info:navigator.platform
+    device_info:
+    navigator.platform
 
   };
 
   try{
 
-    // =========================
-    // GET QUERYSTRING
-    // =========================
-
     const query =
-      new URLSearchParams(payload);
+      new URLSearchParams(
+        payload
+      );
 
-    const response = await fetch(
+    const response =
+      await fetch(
 
-      APPS_SCRIPT_URL +
-      '?' +
-      query.toString(),
+        APPS_SCRIPT_URL +
+        '?' +
+        query.toString(),
 
-      {
-        method:'GET',
-        mode:'cors'
-      }
+        {
+          method:'GET',
+          mode:'cors'
+        }
 
-    );
+      );
 
     const result =
       await response.json();
@@ -1020,9 +1249,23 @@ async function submitPresence(type){
         `Presensi ${type} berhasil`
       );
 
-      loadDashboard();
-      loadMonitoring();
-      loadRisk();
+      document
+      .getElementById(
+        'keluargaDone'
+      )
+      .value = '';
+
+      document
+      .getElementById(
+        'usahaDone'
+      )
+      .value = '';
+
+      document
+      .getElementById(
+        'notes'
+      )
+      .value = '';
 
     }
 
@@ -1049,165 +1292,25 @@ async function submitPresence(type){
 
 }
 
-function initCharts(){
-
-  activityChart = new Chart(
-    document.getElementById('activityChart'),
-    {
-      type:'bar',
-      data:{
-        labels:['PK','PU','DK','DU'],
-        datasets:[{data:[0,0,0,0]}]
-      },
-      options:{responsive:true}
-    }
-  );
-
-  gpsChart = new Chart(
-    document.getElementById('gpsChart'),
-    {
-      type:'doughnut',
-      data:{
-        labels:['VALID','WARNING','INVALID'],
-        datasets:[{data:[0,0,0]}]
-      },
-      options:{responsive:true}
-    }
-  );
-
-}
-
-async function loadDashboard(){
-
-  try{
-
-    const response = await fetch(
-      APPS_SCRIPT_URL + '?action=dashboard',
-      {
-        method:'GET',
-        mode:'cors'
-      }
-    );
-
-    const result = await response.json();
-
-    console.log(result);
-
-  }
-
-  catch(err){
-    console.error(err);
-  }
-
-}
-
-async function loadMonitoring(){
-
-  try{
-
-    const response = await fetch(
-      APPS_SCRIPT_URL + '?action=monitoring',
-      {
-        method:'GET',
-        mode:'cors'
-      }
-    );
-
-    const result = await response.json();
-
-    console.log(result);
-
-  }
-
-  catch(err){
-    console.error(err);
-  }
-
-}
-
-async function loadRisk(){
-
-  try{
-
-    const response = await fetch(
-      APPS_SCRIPT_URL + '?action=risk',
-      {
-        method:'GET',
-        mode:'cors'
-      }
-    );
-
-    const result = await response.json();
-
-    console.log(result);
-
-  }
-
-  catch(err){
-    console.error(err);
-  }
-
-}
+/* =========================
+AUTO LOGIN
+========================= */
 
 window.onload = ()=>{
 
-  const user = localStorage.getItem('serbat_user');
+  const user =
+    localStorage.getItem(
+      'serbat_user'
+    );
 
   if(user){
+
     showApp();
+
   }
 
-}
+};
 
 </script>
-
-<script>
-
-const loadingBar = document.getElementById('loadingBar');
-
-let loadingProgress = 0;
-
-const loadingInterval = setInterval(()=>{
-
-  loadingProgress += Math.random()*18;
-
-  if(loadingProgress > 90){
-    loadingProgress = 90;
-  }
-
-  loadingBar.style.width = loadingProgress + '%';
-
-},300);
-
-function hideLoadingScreen(){
-
-  clearInterval(loadingInterval);
-
-  loadingBar.style.width = '100%';
-
-  setTimeout(()=>{
-
-    const loading = document.getElementById('loadingScreen');
-
-    loading.style.opacity = '0';
-
-    setTimeout(()=>{
-      loading.remove();
-    },500);
-
-  },600);
-
-}
-
-window.addEventListener('load',()=>{
-
-  setTimeout(()=>{
-    hideLoadingScreen();
-  },2200);
-
-});
-
-</script>
-
 </body>
 </html>
