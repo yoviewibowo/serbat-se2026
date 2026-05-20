@@ -1,39 +1,45 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+/>
+
 <title>SERBAT SE2026</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet"
+/>
 
 <style>
 
 :root{
+
   --primary:#F57C00;
   --primary-dark:#E65100;
   --secondary:#FFB74D;
-  --bg:#F4F7FB;
+
+  --bg:#F6F8FC;
   --card:#FFFFFF;
+
   --text:#1E293B;
   --muted:#64748B;
-  --border:#E2E8F0;
-  --success:#22C55E;
-  --danger:#EF4444;
-  --warning:#FACC15;
-  --shadow:0 10px 30px rgba(0,0,0,0.08);
-}
 
-body.dark{
-  --bg:#0F172A;
-  --card:#1E293B;
-  --text:#F8FAFC;
-  --muted:#CBD5E1;
-  --border:#334155;
-  --shadow:0 10px 30px rgba(0,0,0,0.35);
+  --border:#E2E8F0;
+
+  --success:#22C55E;
+  --warning:#FACC15;
+  --danger:#EF4444;
+
+  --shadow:
+  0 12px 40px rgba(0,0,0,0.08);
+
 }
 
 *{
@@ -44,23 +50,30 @@ body.dark{
 }
 
 body{
-  background:var(--bg);
+
+  background:
+  linear-gradient(
+    180deg,
+    #FFF7ED,
+    #F8FAFC
+  );
+
+  min-height:100vh;
+
   color:var(--text);
-  transition:0.3s;
+
+  padding:18px;
+
 }
 
-.hidden{
-  display:none !important;
-}
-
-/* =====================
+/* =========================
 LOADING
-===================== */
+========================= */
 
 #loadingScreen{
+
   position:fixed;
   inset:0;
-  z-index:99999;
 
   background:
   linear-gradient(
@@ -75,69 +88,75 @@ LOADING
   justify-content:center;
   flex-direction:column;
 
+  z-index:99999;
+
   color:white;
+
 }
 
 .loading-logo{
+
   font-size:68px;
   font-weight:800;
-  letter-spacing:3px;
+  letter-spacing:4px;
+
 }
 
 .loading-sub{
-  margin-top:10px;
-  font-size:14px;
-  line-height:1.8;
+
+  margin-top:14px;
   text-align:center;
+
+  line-height:1.8;
+
 }
 
 .loading-bar-wrap{
-  width:220px;
+
+  width:240px;
   height:10px;
-  background:rgba(255,255,255,0.2);
+
+  background:
+  rgba(255,255,255,0.2);
+
   border-radius:999px;
+
   overflow:hidden;
+
   margin-top:28px;
+
 }
 
 .loading-bar{
+
   width:0%;
   height:100%;
+
   background:white;
+
 }
 
-.loading-footer{
-  position:absolute;
-  bottom:28px;
-  font-size:13px;
-}
-
-/* =====================
+/* =========================
 LOGIN
-===================== */
+========================= */
 
 .login-page{
-  min-height:100vh;
 
-  background:
-  linear-gradient(
-    135deg,
-    #FFA726,
-    #FB8C00,
-    #EF6C00
-  );
+  min-height:100vh;
 
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:24px;
+
 }
 
 .login-card{
+
   width:100%;
   max-width:420px;
 
-  background:rgba(255,255,255,0.96);
+  background:
+  rgba(255,255,255,0.95);
 
   backdrop-filter:blur(12px);
 
@@ -145,69 +164,141 @@ LOGIN
 
   padding:34px;
 
-  box-shadow:0 20px 60px rgba(0,0,0,0.18);
+  box-shadow:
+  0 25px 60px rgba(0,0,0,0.12);
+
+  position:relative;
+
+  overflow:hidden;
+
+}
+
+.login-card::before{
+
+  content:'';
+
+  position:absolute;
+
+  width:240px;
+  height:240px;
+
+  border-radius:50%;
+
+  background:
+  rgba(251,140,0,0.08);
+
+  top:-100px;
+  right:-60px;
+
 }
 
 .brand{
+
+  position:relative;
+  z-index:2;
+
   text-align:center;
+
   margin-bottom:28px;
+
 }
 
 .brand h1{
-  font-size:54px;
-  color:#E65100;
+
+  font-size:56px;
+
+  color:var(--primary-dark);
+
   font-weight:800;
+
 }
 
 .brand p{
+
   margin-top:10px;
-  color:#666;
+
   line-height:1.8;
+
   font-size:14px;
+
+  color:#666;
+
 }
 
 .form-group{
+
   margin-bottom:18px;
+
+  position:relative;
+  z-index:2;
+
 }
 
 .form-group label{
+
   display:block;
+
   margin-bottom:8px;
+
   font-size:14px;
-  font-weight:600;
+
+  font-weight:700;
+
 }
 
 .form-group input,
-.form-group textarea{
-  width:100%;
-  border:1px solid #E2E8F0;
-  border-radius:18px;
-  padding:14px 16px;
-  outline:none;
-  font-size:14px;
-}
+.form-group textarea,
+.form-group select{
 
-.form-group textarea{
-  resize:none;
+  width:100%;
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  padding:15px 16px;
+
+  outline:none;
+
+  background:#FAFAFA;
+
+  font-size:14px;
+
+  transition:0.2s;
+
 }
 
 .form-group input:focus,
-.form-group textarea:focus{
-  border-color:#FB8C00;
-  box-shadow:0 0 0 4px rgba(251,140,0,0.15);
+.form-group textarea:focus,
+.form-group select:focus{
+
+  border-color:var(--primary);
+
+  background:white;
+
+  box-shadow:
+  0 0 0 4px rgba(251,140,0,0.12);
+
 }
 
 .btn{
+
   border:none;
-  border-radius:20px;
-  padding:16px;
+
+  border-radius:22px;
+
+  padding:17px;
+
   cursor:pointer;
-  font-weight:700;
-  font-size:14px;
-  transition:0.2s;
+
+  font-weight:800;
+
+  font-size:15px;
+
 }
 
 .btn-primary{
+
   width:100%;
 
   background:
@@ -219,16 +310,19 @@ LOGIN
 
   color:white;
 
-  box-shadow:0 10px 24px rgba(251,140,0,0.3);
+  box-shadow:
+  0 12px 28px rgba(251,140,0,0.24);
+
 }
 
-/* =====================
+/* =========================
 APP
-===================== */
+========================= */
 
 .app{
+
   display:none;
-  padding:18px;
+
 }
 
 .topbar{
@@ -242,232 +336,339 @@ APP
 
   color:white;
 
-  border-radius:30px;
+  border-radius:34px;
 
-  padding:28px 24px;
-
-  box-shadow:var(--shadow);
+  padding:32px 26px;
 
   position:relative;
 
   overflow:hidden;
 
+  box-shadow:var(--shadow);
+
   margin-bottom:18px;
+
 }
 
-.topbar::after{
+.topbar::before{
+
   content:'';
+
   position:absolute;
-  width:180px;
-  height:180px;
+
+  width:220px;
+  height:220px;
+
   border-radius:50%;
-  background:rgba(255,255,255,0.1);
-  top:-60px;
-  right:-40px;
+
+  background:
+  rgba(255,255,255,0.12);
+
+  top:-90px;
+  right:-70px;
+
 }
 
 .topbar h1{
-  font-size:40px;
+
+  font-size:42px;
+
   font-weight:800;
+
+  position:relative;
+  z-index:2;
+
 }
 
 .topbar p{
+
   margin-top:10px;
+
   line-height:1.8;
-  font-size:14px;
-  opacity:0.95;
+
+  position:relative;
+  z-index:2;
+
 }
 
-.dark-toggle{
-  position:absolute;
-  top:18px;
-  right:18px;
-
-  width:46px;
-  height:46px;
-
-  border:none;
-
-  border-radius:50%;
-
-  background:rgba(255,255,255,0.2);
-
-  color:white;
-
-  font-size:20px;
-
-  cursor:pointer;
-
-  backdrop-filter:blur(8px);
-}
+/* =========================
+CARD
+========================= */
 
 .card{
-  background:var(--card);
+
+  background:white;
+
   border-radius:28px;
+
   padding:22px;
+
   margin-bottom:18px;
+
   box-shadow:var(--shadow);
-  transition:0.3s;
+
 }
+
+/* =========================
+TITLE
+========================= */
 
 .section-title{
+
   font-size:18px;
-  font-weight:700;
-  margin-bottom:18px;
+
+  font-weight:800;
+
   color:var(--primary-dark);
+
+  margin-bottom:18px;
+
 }
 
-.info-grid{
+/* =========================
+GPS
+========================= */
+
+.gps-grid{
+
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+
+  grid-template-columns:
+  repeat(2,1fr);
+
   gap:14px;
+
 }
 
-.info-box{
-  background:rgba(251,140,0,0.08);
-  border:1px solid rgba(251,140,0,0.18);
+.gps-item{
+
+  background:
+  linear-gradient(
+    180deg,
+    #FFF7ED,
+    #FFFFFF
+  );
+
+  border:1px solid #FED7AA;
+
   border-radius:20px;
+
   padding:16px;
+
 }
 
-.info-box small{
+.gps-item small{
+
   display:block;
-  margin-bottom:6px;
-  color:#9A3412;
+
   font-size:12px;
+
+  margin-bottom:6px;
+
+  color:#9A3412;
+
 }
 
-.info-box strong{
-  font-size:15px;
+.gps-item strong{
+
+  font-size:14px;
+
+  color:#7C2D12;
+
 }
 
 .status-pill{
-  display:inline-flex;
-  padding:10px 16px;
-  border-radius:999px;
-  font-size:13px;
-  font-weight:700;
+
   margin-top:18px;
+
+  display:inline-flex;
+
+  align-items:center;
+  justify-content:center;
+
+  padding:10px 16px;
+
+  border-radius:999px;
+
+  font-size:13px;
+
+  font-weight:800;
+
 }
 
 .valid{
+
   background:#DCFCE7;
   color:#166534;
+
 }
 
 .warning{
+
   background:#FEF9C3;
   color:#854D0E;
+
 }
 
 .invalid{
+
   background:#FEE2E2;
   color:#991B1B;
+
 }
 
+/* =========================
+PRESENCE
+========================= */
+
 .presence-grid{
+
   display:grid;
+
   grid-template-columns:1fr 1fr;
+
   gap:14px;
+
 }
 
 .presence-btn{
+
   border:none;
-  border-radius:22px;
+
+  border-radius:24px;
+
   padding:24px 18px;
+
   cursor:pointer;
+
   transition:0.2s;
+
 }
 
 .presence-btn.active{
-  transform:scale(1.02);
+
+  transform:scale(1.03);
+
 }
 
 .presence-start{
-  background:#DCFCE7;
+
+  background:
+  linear-gradient(
+    135deg,
+    #DCFCE7,
+    #BBF7D0
+  );
+
 }
 
 .presence-end{
-  background:#FEE2E2;
+
+  background:
+  linear-gradient(
+    135deg,
+    #FEE2E2,
+    #FECACA
+  );
+
 }
 
 .presence-title{
+
   font-size:16px;
+
   font-weight:800;
+
 }
 
 .presence-desc{
+
   margin-top:8px;
-  color:#64748B;
+
   font-size:13px;
-  line-height:1.6;
+
+  line-height:1.7;
+
+  color:#64748B;
+
 }
+
+/* =========================
+ACTIVITY
+========================= */
 
 .activity-item{
-  border:2px solid var(--border);
-  border-radius:20px;
-  padding:16px;
-  margin-bottom:14px;
-  transition:0.2s;
-}
 
-.activity-item.active{
-  border-color:#FB8C00;
-  background:rgba(251,140,0,0.06);
+  border:2px solid #F1F5F9;
+
+  border-radius:22px;
+
+  padding:16px;
+
+  margin-bottom:14px;
+
+  background:#FCFCFC;
+
 }
 
 .activity-top{
+
   display:flex;
+
   align-items:center;
+
   gap:12px;
+
 }
 
 .activity-top input{
+
   width:20px;
   height:20px;
+
+  accent-color:var(--primary);
+
 }
 
 .activity-title{
+
   font-size:14px;
+
   font-weight:700;
+
 }
 
 .activity-input{
+
   margin-top:14px;
+
 }
 
 .activity-input input{
+
   width:100%;
+
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:12px 14px;
-  background:transparent;
-  color:var(--text);
+
+  border-radius:16px;
+
+  padding:13px 14px;
+
 }
 
-.activity-input input:disabled{
-  opacity:0.5;
-}
-
-.ppl-list{
-  display:grid;
-  gap:12px;
-}
-
-.ppl-item{
-  border:2px solid var(--border);
-  border-radius:18px;
-  padding:14px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
+/* =========================
+BUTTON
+========================= */
 
 .submit-btn{
+
   width:100%;
+
   border:none;
-  border-radius:22px;
-  padding:18px;
+
+  border-radius:24px;
+
+  padding:19px;
 
   background:
   linear-gradient(
@@ -479,25 +680,39 @@ APP
   color:white;
 
   font-size:15px;
+
   font-weight:800;
 
   cursor:pointer;
 
-  box-shadow:0 12px 26px rgba(251,140,0,0.25);
+  box-shadow:
+  0 12px 28px rgba(251,140,0,0.26);
+
+}
+
+.hidden{
+  display:none !important;
 }
 
 .footer{
+
   text-align:center;
-  color:var(--muted);
+
+  padding:20px;
+
+  color:#64748B;
+
   font-size:13px;
-  padding:12px 0 24px;
+
 }
 
 @media(max-width:480px){
 
-  .presence-grid,
-  .info-grid{
+  .gps-grid,
+  .presence-grid{
+
     grid-template-columns:1fr;
+
   }
 
 }
@@ -506,9 +721,9 @@ APP
 </head>
 <body>
 
-<!-- =====================
+<!-- =========================
 LOADING
-===================== -->
+========================= -->
 
 <div id="loadingScreen">
 
@@ -522,67 +737,90 @@ LOADING
   </div>
 
   <div class="loading-bar-wrap">
-    <div class="loading-bar" id="loadingBar"></div>
-  </div>
-
-  <div class="loading-footer">
-    SERBAT SE2026 by yovie.wibowo
+    <div
+      class="loading-bar"
+      id="loadingBar"
+    ></div>
   </div>
 
 </div>
 
-<!-- =====================
+<!-- =========================
 LOGIN
-===================== -->
+========================= -->
 
-<div class="login-page" id="loginPage">
+<div
+class="login-page"
+id="loginPage"
+>
 
   <div class="login-card">
 
     <div class="brand">
+
       <h1>SERBAT</h1>
+
       <p>
         Sistem Evaluasi Real-time<br>
         Berbasis Aktivitas Lapangan
       </p>
+
     </div>
 
     <div class="form-group">
+
       <label>User ID</label>
-      <input type="text" id="userId" placeholder="Contoh: PPL001">
+
+      <input
+        type="text"
+        id="userId"
+        placeholder="Contoh: PPL001"
+      >
+
     </div>
 
     <div class="form-group">
+
       <label>Password</label>
-      <input type="password" id="password" placeholder="Masukkan password">
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Masukkan password"
+      >
+
     </div>
 
-    <button class="btn btn-primary" onclick="login()">
+    <button
+      class="btn btn-primary"
+      onclick="login()"
+    >
+
       Login SERBAT
+
     </button>
 
   </div>
 
 </div>
 
-<!-- =====================
+<!-- =========================
 APP
-===================== -->
+========================= -->
 
-<div class="app" id="app">
+<div
+class="app"
+id="app"
+>
 
-  <!-- TOPBAR -->
+  <!-- HEADER -->
 
   <div class="topbar">
-
-    <button class="dark-toggle" onclick="toggleDarkMode()">
-      🌙
-    </button>
 
     <h1>SERBAT</h1>
 
     <p id="welcomeText">
-      Memuat data petugas...
+      Memuat data...
     </p>
 
   </div>
@@ -595,31 +833,134 @@ APP
       Status GPS
     </div>
 
-    <div class="info-grid">
+    <div class="gps-grid">
 
-      <div class="info-box">
+      <div class="gps-item">
+
         <small>Latitude</small>
-        <strong id="latText">-</strong>
+
+        <strong id="latText">
+          Detecting...
+        </strong>
+
       </div>
 
-      <div class="info-box">
+      <div class="gps-item">
+
         <small>Longitude</small>
-        <strong id="lngText">-</strong>
+
+        <strong id="lngText">
+          Detecting...
+        </strong>
+
       </div>
 
-      <div class="info-box">
+      <div class="gps-item">
+
         <small>Akurasi</small>
-        <strong id="accuracyText">-</strong>
+
+        <strong id="accuracyText">
+          Detecting...
+        </strong>
+
       </div>
 
-      <div class="info-box">
-        <small>IDSUBSLS</small>
-        <strong id="idsubslsText">Detecting...</strong>
+      <div class="gps-item">
+
+        <small>Status</small>
+
+        <strong id="gpsStatusText">
+          Detecting...
+        </strong>
+
       </div>
 
     </div>
 
     <div id="gpsBadge"></div>
+
+  </div>
+
+  <!-- PPL SUBSLS -->
+
+  <div
+    class="card hidden"
+    id="pplSubslsCard"
+  >
+
+    <div class="section-title">
+      Pilih Wilayah Kerja
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        SubSLS Penugasan
+      </label>
+
+      <select
+        id="pplSubslsSelect"
+        onchange="onPPLSubSLSChange()"
+      >
+
+        <option value="">
+          Pilih SubSLS
+        </option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+  <!-- PML FLOW -->
+
+  <div
+    class="card hidden"
+    id="pmlHierarchyCard"
+  >
+
+    <div class="section-title">
+      Pendampingan PML
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        Pilih PPL
+      </label>
+
+      <select
+        id="pmlPPLSelect"
+        onchange="onPMLPPLChange()"
+      >
+
+        <option value="">
+          Pilih PPL
+        </option>
+
+      </select>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        Pilih SubSLS
+      </label>
+
+      <select
+        id="pmlSubslsSelect"
+        onchange="onPMLSubSLSChange()"
+      >
+
+        <option value="">
+          Pilih SubSLS
+        </option>
+
+      </select>
+
+    </div>
 
   </div>
 
@@ -633,7 +974,10 @@ APP
 
     <div class="presence-grid">
 
-      <button class="presence-btn presence-start active" onclick="switchPresence('MULAI',this)">
+      <button
+        class="presence-btn presence-start active"
+        onclick="switchPresence('MULAI',this)"
+      >
 
         <div class="presence-title">
           Presensi Mulai
@@ -645,7 +989,10 @@ APP
 
       </button>
 
-      <button class="presence-btn presence-end" onclick="switchPresence('SELESAI',this)">
+      <button
+        class="presence-btn presence-end"
+        onclick="switchPresence('SELESAI',this)"
+      >
 
         <div class="presence-title">
           Presensi Selesai
@@ -663,17 +1010,26 @@ APP
 
   <!-- PPL FORM -->
 
-  <div class="card hidden" id="pplForm">
+  <div
+    class="card hidden"
+    id="pplForm"
+  >
 
     <div class="section-title">
-      Aktivitas PPL Hari Ini
+      Aktivitas PPL
     </div>
 
-    <div class="activity-item" id="pkItem">
+    <!-- PK -->
+
+    <div class="activity-item">
 
       <div class="activity-top">
 
-        <input type="checkbox" id="pkCheck" onchange="toggleActivity('pk')">
+        <input
+          type="checkbox"
+          id="pkCheck"
+          onchange="toggleActivity('pk')"
+        >
 
         <div class="activity-title">
           Pemutakhiran Keluarga
@@ -683,17 +1039,28 @@ APP
 
       <div class="activity-input">
 
-        <input type="number" disabled id="pkInput" placeholder="Jumlah keluarga">
+        <input
+          type="number"
+          id="pkInput"
+          disabled
+          placeholder="Jumlah keluarga"
+        >
 
       </div>
 
     </div>
 
-    <div class="activity-item" id="puItem">
+    <!-- PU -->
+
+    <div class="activity-item">
 
       <div class="activity-top">
 
-        <input type="checkbox" id="puCheck" onchange="toggleActivity('pu')">
+        <input
+          type="checkbox"
+          id="puCheck"
+          onchange="toggleActivity('pu')"
+        >
 
         <div class="activity-title">
           Pemutakhiran Usaha
@@ -703,17 +1070,28 @@ APP
 
       <div class="activity-input">
 
-        <input type="number" disabled id="puInput" placeholder="Jumlah usaha">
+        <input
+          type="number"
+          id="puInput"
+          disabled
+          placeholder="Jumlah usaha"
+        >
 
       </div>
 
     </div>
 
-    <div class="activity-item" id="lkItem">
+    <!-- LK -->
+
+    <div class="activity-item">
 
       <div class="activity-top">
 
-        <input type="checkbox" id="lkCheck" onchange="toggleActivity('lk')">
+        <input
+          type="checkbox"
+          id="lkCheck"
+          onchange="toggleActivity('lk')"
+        >
 
         <div class="activity-title">
           Pendataan Lapangan Keluarga
@@ -723,17 +1101,28 @@ APP
 
       <div class="activity-input">
 
-        <input type="number" disabled id="lkInput" placeholder="Jumlah keluarga">
+        <input
+          type="number"
+          id="lkInput"
+          disabled
+          placeholder="Jumlah keluarga"
+        >
 
       </div>
 
     </div>
 
-    <div class="activity-item" id="luItem">
+    <!-- LU -->
+
+    <div class="activity-item">
 
       <div class="activity-top">
 
-        <input type="checkbox" id="luCheck" onchange="toggleActivity('lu')">
+        <input
+          type="checkbox"
+          id="luCheck"
+          onchange="toggleActivity('lu')"
+        >
 
         <div class="activity-title">
           Pendataan Lapangan Usaha
@@ -743,17 +1132,14 @@ APP
 
       <div class="activity-input">
 
-        <input type="number" disabled id="luInput" placeholder="Jumlah usaha">
+        <input
+          type="number"
+          id="luInput"
+          disabled
+          placeholder="Jumlah usaha"
+        >
 
       </div>
-
-    </div>
-
-    <div class="form-group">
-
-      <label>Catatan Lapangan</label>
-
-      <textarea rows="3" id="pplNotes"></textarea>
 
     </div>
 
@@ -761,35 +1147,73 @@ APP
 
   <!-- PML FORM -->
 
-  <div class="card hidden" id="pmlForm">
+  <div
+    class="card hidden"
+    id="pmlForm"
+  >
 
     <div class="section-title">
-      PPL yang Didampingi
-    </div>
-
-    <div class="ppl-list" id="pplList"></div>
-
-    <div class="form-group">
-      <label>Jumlah Keluarga Didampingi</label>
-      <input type="number" id="pmlKeluarga">
+      Aktivitas Pendampingan
     </div>
 
     <div class="form-group">
-      <label>Jumlah Usaha Didampingi</label>
-      <input type="number" id="pmlUsaha">
+
+      <label>
+        Jumlah Keluarga Didampingi
+      </label>
+
+      <input
+        type="number"
+        id="pmlKeluarga"
+      >
+
     </div>
 
     <div class="form-group">
-      <label>Catatan Pengawasan</label>
-      <textarea rows="3" id="pmlNotes"></textarea>
+
+      <label>
+        Jumlah Usaha Didampingi
+      </label>
+
+      <input
+        type="number"
+        id="pmlUsaha"
+      >
+
+    </div>
+
+  </div>
+
+  <!-- NOTES -->
+
+  <div class="card">
+
+    <div class="section-title">
+      Catatan Lapangan
+    </div>
+
+    <div class="form-group">
+
+      <textarea
+        rows="4"
+        id="notesInput"
+        placeholder="Catatan tambahan..."
+      ></textarea>
+
     </div>
 
   </div>
 
   <!-- SUBMIT -->
 
-  <button class="submit-btn" onclick="submitPresence()" id="submitBtn">
-    Submit Presensi Mulai
+  <button
+    class="submit-btn"
+    onclick="submitPresence()"
+    id="submitBtn"
+  >
+
+    Submit Presensi
+
   </button>
 
   <div class="footer">
@@ -800,129 +1224,202 @@ APP
 
 <script>
 
-/* =====================
+/* =========================
 CONFIG
-===================== */
+========================= */
 
 const APPS_SCRIPT_URL =
 'https://script.google.com/macros/s/AKfycbz_X6U4krnGxFAc0PzZGdfE1Z9ablltBh3DHgq4r7UAtpCqMi6Zj7O2KOJv8F4760JI/exec';
 
-/* =====================
+/* =========================
 GLOBAL
-===================== */
+========================= */
 
 let currentUser = null;
-let currentPresence = 'MULAI';
 
 let currentLat = null;
 let currentLng = null;
 let currentAccuracy = null;
 
-let validationStatus = 'VALID';
-let detectedIDSUBSLS = '-';
+let currentPresence =
+'MULAI';
 
-/* =====================
+let selectedSubSLS = '';
+
+let selectedPPL = '';
+
+/* =========================
 LOADING
-===================== */
+========================= */
 
 const loadingBar =
-document.getElementById('loadingBar');
+document.getElementById(
+  'loadingBar'
+);
 
 let progress = 0;
 
-const interval = setInterval(()=>{
+const interval =
+setInterval(()=>{
 
-  progress += Math.random()*18;
+  progress += 20;
 
   if(progress > 90){
+
     progress = 90;
+
   }
 
   loadingBar.style.width =
   progress + '%';
 
-},300);
+},250);
 
-window.addEventListener('load',()=>{
+window.onload = ()=>{
 
   setTimeout(()=>{
 
     clearInterval(interval);
 
-    loadingBar.style.width = '100%';
+    loadingBar.style.width =
+    '100%';
 
     setTimeout(()=>{
 
-      document.getElementById('loadingScreen').style.opacity = '0';
+      document
+      .getElementById(
+        'loadingScreen'
+      )
+      .remove();
 
-      setTimeout(()=>{
+    },400);
 
-        document.getElementById('loadingScreen').remove();
+  },1200);
 
-      },500);
+};
 
-    },500);
-
-  },1500);
-
-});
-
-/* =====================
-DARK MODE
-===================== */
-
-function toggleDarkMode(){
-
-  document.body.classList.toggle('dark');
-
-}
-
-/* =====================
+/* =========================
 LOGIN
-===================== */
+========================= */
 
 async function login(){
 
   const userId =
-  document.getElementById('userId').value;
+    document
+    .getElementById(
+      'userId'
+    )
+    .value;
 
   const password =
-  document.getElementById('password').value;
+    document
+    .getElementById(
+      'password'
+    )
+    .value;
 
   if(!userId || !password){
-    alert('Lengkapi login');
+
+    alert(
+      'Lengkapi login'
+    );
+
     return;
+
   }
 
   try{
 
-    const response = await fetch(
-      `${APPS_SCRIPT_URL}?action=login&user_id=${encodeURIComponent(userId)}&password=${encodeURIComponent(password)}`
-    );
+    const response =
+      await fetch(
 
-    const result = await response.json();
+`${APPS_SCRIPT_URL}?action=login&user_id=${encodeURIComponent(userId)}&password=${encodeURIComponent(password)}`
+
+      );
+
+    const result =
+      await response.json();
 
     if(result.status){
 
-      currentUser = result.data;
+      currentUser =
+        result.data;
 
-      document.getElementById('loginPage').style.display = 'none';
+      document
+      .getElementById(
+        'loginPage'
+      )
+      .style.display =
+      'none';
 
-      document.getElementById('app').style.display = 'block';
+      document
+      .getElementById(
+        'app'
+      )
+      .style.display =
+      'block';
 
-      document.getElementById('welcomeText').innerHTML = `
-        ${currentUser.nama}<br>
+      document
+      .getElementById(
+        'welcomeText'
+      )
+      .innerHTML = `
+
+        ${currentUser.nama}
+        <br>
+
         ${currentUser.role}
+
       `;
 
-      getLocation();
+      if(
 
-      loadPMLAssignments();
+        currentUser.role
+        === 'PPL'
+
+      ){
+
+        document
+        .getElementById(
+          'pplSubslsCard'
+        )
+        .classList.remove(
+          'hidden'
+        );
+
+        loadPPLSubSLS();
+
+      }
+
+      else if(
+
+        currentUser.role
+        === 'PML'
+
+      ){
+
+        document
+        .getElementById(
+          'pmlHierarchyCard'
+        )
+        .classList.remove(
+          'hidden'
+        );
+
+        loadPMLPPL();
+
+      }
+
+      getLocation();
 
     }
 
     else{
-      alert(result.message || 'Login gagal');
+
+      alert(
+        result.message
+      );
+
     }
 
   }
@@ -931,258 +1428,501 @@ async function login(){
 
     console.error(err);
 
-    alert('Koneksi server gagal');
+    alert(
+      'Login gagal'
+    );
 
   }
 
 }
 
-/* =====================
+/* =========================
 GPS
-===================== */
+========================= */
 
 function getLocation(){
 
-  if(!navigator.geolocation){
-
-    alert('GPS tidak didukung browser');
-
-    return;
-
-  }
-
   navigator.geolocation.getCurrentPosition(
 
-    successLocation,
-    errorLocation,
+    pos=>{
+
+      currentLat =
+        pos.coords.latitude;
+
+      currentLng =
+        pos.coords.longitude;
+
+      currentAccuracy =
+        pos.coords.accuracy;
+
+      document
+      .getElementById(
+        'latText'
+      )
+      .innerText =
+      currentLat.toFixed(6);
+
+      document
+      .getElementById(
+        'lngText'
+      )
+      .innerText =
+      currentLng.toFixed(6);
+
+      document
+      .getElementById(
+        'accuracyText'
+      )
+      .innerText =
+      Math.round(
+        currentAccuracy
+      ) + ' meter';
+
+      renderGPSStatus();
+
+    },
+
+    err=>{
+
+      console.error(err);
+
+      alert(
+        'GPS gagal diakses'
+      );
+
+    },
 
     {
+
       enableHighAccuracy:true,
       timeout:10000,
       maximumAge:0
+
     }
 
   );
 
 }
 
-function successLocation(position){
-
-  currentLat = position.coords.latitude;
-  currentLng = position.coords.longitude;
-  currentAccuracy = position.coords.accuracy;
-
-  document.getElementById('latText').innerText =
-  currentLat.toFixed(6);
-
-  document.getElementById('lngText').innerText =
-  currentLng.toFixed(6);
-
-  document.getElementById('accuracyText').innerText =
-  Math.round(currentAccuracy) + ' meter';
-
-  if(currentAccuracy <= 30){
-
-    validationStatus = 'VALID';
-
-  }
-
-  else if(currentAccuracy <= 50){
-
-    validationStatus = 'WARNING';
-
-  }
-
-  else{
-
-    validationStatus = 'INVALID';
-
-  }
-
-  renderGPSStatus();
-
-}
-
-function errorLocation(error){
-
-  console.error(error);
-
-  alert('GPS gagal diakses');
-
-}
-
 function renderGPSStatus(){
 
+  let status =
+  'VALID';
+
+  if(currentAccuracy > 50){
+
+    status =
+    'INVALID';
+
+  }
+
+  else if(currentAccuracy > 30){
+
+    status =
+    'WARNING';
+
+  }
+
+  document
+  .getElementById(
+    'gpsStatusText'
+  )
+  .innerText =
+  status;
+
   const badge =
-  document.getElementById('gpsBadge');
+    document
+    .getElementById(
+      'gpsBadge'
+    );
 
-  let html = '';
+  badge.innerHTML = `
 
-  if(validationStatus === 'VALID'){
+    <div class="status-pill ${status.toLowerCase()}">
 
-    html = `
-      <div class="status-pill valid">
-        VALID GPS
-      </div>
-    `;
+      ${status}
+      ·
+      ${Math.round(currentAccuracy)}m
 
-  }
+    </div>
 
-  else if(validationStatus === 'WARNING'){
-
-    html = `
-      <div class="status-pill warning">
-        WARNING GPS
-      </div>
-    `;
-
-  }
-
-  else{
-
-    html = `
-      <div class="status-pill invalid">
-        INVALID GPS
-      </div>
-    `;
-
-  }
-
-  badge.innerHTML = html;
+  `;
 
 }
 
-/* =====================
-PRESENCE
-===================== */
+/* =========================
+PPL SUBSLS
+========================= */
 
-function switchPresence(type,el){
+async function loadPPLSubSLS(){
 
-  currentPresence = type;
+  const response =
+    await fetch(
 
-  document
-  .querySelectorAll('.presence-btn')
-  .forEach(btn=>{
+`${APPS_SCRIPT_URL}?action=get_ppl_subsls&ppl_id=${currentUser.user_id}`
 
-    btn.classList.remove('active');
+    );
+
+  const result =
+    await response.json();
+
+  const select =
+    document
+    .getElementById(
+      'pplSubslsSelect'
+    );
+
+  result.data.forEach(item=>{
+
+    select.innerHTML += `
+
+      <option value="${item.idsubsls}">
+
+        ${item.idsubsls}
+        -
+        ${item.nama_subsls}
+
+      </option>
+
+    `;
 
   });
 
-  el.classList.add('active');
+}
 
-  renderPresence();
+function onPPLSubSLSChange(){
+
+  selectedSubSLS =
+    document
+    .getElementById(
+      'pplSubslsSelect'
+    )
+    .value;
 
 }
 
-function renderPresence(){
+/* =========================
+PML PPL
+========================= */
 
-  document.getElementById('pplForm').classList.add('hidden');
-  document.getElementById('pmlForm').classList.add('hidden');
+async function loadPMLPPL(){
 
-  const submitBtn =
-  document.getElementById('submitBtn');
+  const response =
+    await fetch(
 
-  if(currentPresence === 'MULAI'){
+`${APPS_SCRIPT_URL}?action=get_pml_ppl&pml_id=${currentUser.user_id}`
 
-    submitBtn.innerText =
-    'Submit Presensi Mulai';
+    );
 
-    return;
+  const result =
+    await response.json();
 
-  }
+  const select =
+    document
+    .getElementById(
+      'pmlPPLSelect'
+    );
 
-  submitBtn.innerText =
-  'Submit Presensi Selesai';
+  result.data.forEach(item=>{
 
-  if(currentUser.role === 'PPL'){
+    select.innerHTML += `
 
-    document.getElementById('pplForm').classList.remove('hidden');
+      <option value="${item.ppl_id}">
 
-  }
+        ${item.ppl_id}
+        -
+        ${item.nama_ppl}
 
-  else if(currentUser.role === 'PML'){
+      </option>
 
-    document.getElementById('pmlForm').classList.remove('hidden');
+    `;
+
+  });
+
+}
+
+async function onPMLPPLChange(){
+
+  selectedPPL =
+    document
+    .getElementById(
+      'pmlPPLSelect'
+    )
+    .value;
+
+  const response =
+    await fetch(
+
+`${APPS_SCRIPT_URL}?action=get_ppl_subsls&ppl_id=${selectedPPL}`
+
+    );
+
+  const result =
+    await response.json();
+
+  const select =
+    document
+    .getElementById(
+      'pmlSubslsSelect'
+    );
+
+  select.innerHTML = `
+
+    <option value="">
+      Pilih SubSLS
+    </option>
+
+  `;
+
+  result.data.forEach(item=>{
+
+    select.innerHTML += `
+
+      <option value="${item.idsubsls}">
+
+        ${item.idsubsls}
+        -
+        ${item.nama_subsls}
+
+      </option>
+
+    `;
+
+  });
+
+}
+
+function onPMLSubSLSChange(){
+
+  selectedSubSLS =
+    document
+    .getElementById(
+      'pmlSubslsSelect'
+    )
+    .value;
+
+}
+
+/* =========================
+PRESENCE
+========================= */
+
+function switchPresence(
+  type,
+  el
+){
+
+  currentPresence =
+    type;
+
+  document
+  .querySelectorAll(
+    '.presence-btn'
+  )
+  .forEach(btn=>{
+
+    btn.classList.remove(
+      'active'
+    );
+
+  });
+
+  el.classList.add(
+    'active'
+  );
+
+  document
+  .getElementById(
+    'pplForm'
+  )
+  .classList.add(
+    'hidden'
+  );
+
+  document
+  .getElementById(
+    'pmlForm'
+  )
+  .classList.add(
+    'hidden'
+  );
+
+  if(type === 'SELESAI'){
+
+    if(
+
+      currentUser.role
+      === 'PPL'
+
+    ){
+
+      document
+      .getElementById(
+        'pplForm'
+      )
+      .classList.remove(
+        'hidden'
+      );
+
+    }
+
+    else if(
+
+      currentUser.role
+      === 'PML'
+
+    ){
+
+      document
+      .getElementById(
+        'pmlForm'
+      )
+      .classList.remove(
+        'hidden'
+      );
+
+    }
 
   }
 
 }
 
-/* =====================
+/* =========================
 ACTIVITY
-===================== */
+========================= */
 
 function toggleActivity(type){
 
   const check =
-  document.getElementById(type + 'Check');
+    document
+    .getElementById(
+      type + 'Check'
+    );
 
   const input =
-  document.getElementById(type + 'Input');
+    document
+    .getElementById(
+      type + 'Input'
+    );
 
-  const item =
-  document.getElementById(type + 'Item');
+  input.disabled =
+    !check.checked;
 
-  if(check.checked){
-
-    input.disabled = false;
-
-    item.classList.add('active');
-
-  }
-
-  else{
-
-    input.disabled = true;
+  if(!check.checked){
 
     input.value = '';
-
-    item.classList.remove('active');
 
   }
 
 }
 
-/* =====================
-PML ASSIGNMENT
-===================== */
+/* =========================
+SUBMIT
+========================= */
 
-async function loadPMLAssignments(){
-
-  if(!currentUser) return;
-
-  if(currentUser.role !== 'PML') return;
+async function submitPresence(){
 
   try{
 
-    const response = await fetch(
-      `${APPS_SCRIPT_URL}?action=get_assignment&pml_id=${currentUser.user_id}`
-    );
+    if(!selectedSubSLS){
 
-    const result = await response.json();
+      alert(
+        'Pilih SubSLS'
+      );
 
-    const container =
-    document.getElementById('pplList');
+      return;
 
-    container.innerHTML = '';
+    }
 
-    result.data.forEach(item=>{
+    const params =
+      new URLSearchParams({
 
-      container.innerHTML += `
+        action:
+        'submit_presence',
 
-        <div class="ppl-item">
+        user_id:
+        currentUser.user_id,
 
-          <input type="checkbox">
+        nama:
+        currentUser.nama,
 
-          <div>
-            ${item.ppl_id} - ${item.nama_ppl}
-          </div>
+        role:
+        currentUser.role,
 
-        </div>
+        jenis_presensi:
+        currentPresence,
 
-      `;
+        idsubsls:
+        selectedSubSLS,
 
-    });
+        latitude:
+        currentLat,
+
+        longitude:
+        currentLng,
+
+        gps_accuracy:
+        currentAccuracy,
+
+        pk_count:
+document.getElementById('pkInput')?.value || 0,
+
+        pu_count:
+document.getElementById('puInput')?.value || 0,
+
+        lk_count:
+document.getElementById('lkInput')?.value || 0,
+
+        lu_count:
+document.getElementById('luInput')?.value || 0,
+
+        ppl_didampingi:
+        selectedPPL,
+
+        keluarga_didampingi:
+document.getElementById('pmlKeluarga')?.value || 0,
+
+        usaha_didampingi:
+document.getElementById('pmlUsaha')?.value || 0,
+
+        notes:
+document.getElementById('notesInput').value,
+
+        user_agent:
+        navigator.userAgent,
+
+        device_info:
+        navigator.platform
+
+      });
+
+    const response =
+      await fetch(
+
+`${APPS_SCRIPT_URL}?${params}`
+
+      );
+
+    const result =
+      await response.json();
+
+    if(result.status){
+
+      alert(
+        'Presensi berhasil 😌'
+      );
+
+      location.reload();
+
+    }
+
+    else{
+
+      alert(
+        result.message
+      );
+
+    }
 
   }
 
@@ -1190,17 +1930,11 @@ async function loadPMLAssignments(){
 
     console.error(err);
 
+    alert(
+      'Submit gagal'
+    );
+
   }
-
-}
-
-/* =====================
-SUBMIT
-===================== */
-
-async function submitPresence(){
-
-  alert('Integrasi submit presence siap dikembangkan 😌');
 
 }
 
