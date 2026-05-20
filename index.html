@@ -1,14 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SERBAT SE2026 Mobile</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SERBAT SE2026</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -26,7 +25,15 @@
   --danger:#EF4444;
   --warning:#FACC15;
   --shadow:0 10px 30px rgba(0,0,0,0.08);
-  --radius:26px;
+}
+
+body.dark{
+  --bg:#0F172A;
+  --card:#1E293B;
+  --text:#F8FAFC;
+  --muted:#CBD5E1;
+  --border:#334155;
+  --shadow:0 10px 30px rgba(0,0,0,0.35);
 }
 
 *{
@@ -39,16 +46,22 @@
 body{
   background:var(--bg);
   color:var(--text);
-  min-height:100vh;
+  transition:0.3s;
 }
 
-/* =========================
+.hidden{
+  display:none !important;
+}
+
+/* =====================
 LOADING
-========================= */
+===================== */
 
 #loadingScreen{
   position:fixed;
   inset:0;
+  z-index:99999;
+
   background:
   linear-gradient(
     135deg,
@@ -58,28 +71,24 @@ LOADING
   );
 
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
+  flex-direction:column;
 
   color:white;
-
-  z-index:99999;
-
-  transition:0.5s;
 }
 
 .loading-logo{
-  font-size:64px;
+  font-size:68px;
   font-weight:800;
   letter-spacing:3px;
 }
 
 .loading-sub{
   margin-top:10px;
-  text-align:center;
-  line-height:1.7;
   font-size:14px;
+  line-height:1.8;
+  text-align:center;
 }
 
 .loading-bar-wrap{
@@ -87,35 +96,28 @@ LOADING
   height:10px;
   background:rgba(255,255,255,0.2);
   border-radius:999px;
-  margin-top:28px;
   overflow:hidden;
+  margin-top:28px;
 }
 
 .loading-bar{
   width:0%;
   height:100%;
   background:white;
-  border-radius:999px;
-  transition:0.3s;
 }
 
 .loading-footer{
   position:absolute;
   bottom:28px;
   font-size:13px;
-  opacity:0.9;
 }
 
-/* =========================
+/* =====================
 LOGIN
-========================= */
+===================== */
 
 .login-page{
   min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
 
   background:
   linear-gradient(
@@ -124,37 +126,44 @@ LOGIN
     #FB8C00,
     #EF6C00
   );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
 }
 
 .login-card{
   width:100%;
   max-width:420px;
 
-  background:rgba(255,255,255,0.95);
+  background:rgba(255,255,255,0.96);
+
+  backdrop-filter:blur(12px);
 
   border-radius:34px;
 
-  padding:36px;
+  padding:34px;
 
-  box-shadow:0 20px 50px rgba(0,0,0,0.18);
+  box-shadow:0 20px 60px rgba(0,0,0,0.18);
 }
 
 .brand{
   text-align:center;
-  margin-bottom:30px;
+  margin-bottom:28px;
 }
 
 .brand h1{
   font-size:54px;
-  color:var(--primary-dark);
+  color:#E65100;
   font-weight:800;
 }
 
 .brand p{
   margin-top:10px;
   color:#666;
+  line-height:1.8;
   font-size:14px;
-  line-height:1.7;
 }
 
 .form-group{
@@ -169,65 +178,53 @@ LOGIN
 }
 
 .form-group input,
-.form-group select,
 .form-group textarea{
-
   width:100%;
-
-  border:1px solid var(--border);
-
+  border:1px solid #E2E8F0;
   border-radius:18px;
-
   padding:14px 16px;
-
   outline:none;
-
   font-size:14px;
+}
 
+.form-group textarea{
+  resize:none;
 }
 
 .form-group input:focus,
-.form-group select:focus,
 .form-group textarea:focus{
-
-  border-color:var(--primary);
-
-  box-shadow:
-  0 0 0 4px rgba(245,124,0,0.15);
-
+  border-color:#FB8C00;
+  box-shadow:0 0 0 4px rgba(251,140,0,0.15);
 }
 
 .btn{
-
   border:none;
-
+  border-radius:20px;
+  padding:16px;
   cursor:pointer;
-
-  border-radius:18px;
-
-  padding:15px 18px;
-
-  font-size:14px;
-
   font-weight:700;
-
+  font-size:14px;
   transition:0.2s;
-
 }
 
 .btn-primary{
-  background:var(--primary);
-  color:white;
   width:100%;
+
+  background:
+  linear-gradient(
+    135deg,
+    #FFA726,
+    #FB8C00
+  );
+
+  color:white;
+
+  box-shadow:0 10px 24px rgba(251,140,0,0.3);
 }
 
-.btn-primary:hover{
-  background:var(--primary-dark);
-}
-
-/* =========================
+/* =====================
 APP
-========================= */
+===================== */
 
 .app{
   display:none;
@@ -243,114 +240,114 @@ APP
     #FB8C00
   );
 
-  border-radius:28px;
-
-  padding:24px;
-
   color:white;
 
+  border-radius:30px;
+
+  padding:28px 24px;
+
   box-shadow:var(--shadow);
+
+  position:relative;
+
+  overflow:hidden;
 
   margin-bottom:18px;
 }
 
+.topbar::after{
+  content:'';
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  top:-60px;
+  right:-40px;
+}
+
 .topbar h1{
-  font-size:34px;
+  font-size:40px;
   font-weight:800;
 }
 
 .topbar p{
   margin-top:10px;
-  line-height:1.7;
+  line-height:1.8;
   font-size:14px;
   opacity:0.95;
 }
 
+.dark-toggle{
+  position:absolute;
+  top:18px;
+  right:18px;
+
+  width:46px;
+  height:46px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,0.2);
+
+  color:white;
+
+  font-size:20px;
+
+  cursor:pointer;
+
+  backdrop-filter:blur(8px);
+}
+
 .card{
-
   background:var(--card);
-
   border-radius:28px;
-
   padding:22px;
-
   margin-bottom:18px;
-
   box-shadow:var(--shadow);
-
+  transition:0.3s;
 }
 
 .section-title{
-
   font-size:18px;
-
   font-weight:700;
-
-  color:var(--primary-dark);
-
   margin-bottom:18px;
-
+  color:var(--primary-dark);
 }
 
 .info-grid{
-
   display:grid;
-
-  grid-template-columns:
-  repeat(2,1fr);
-
+  grid-template-columns:repeat(2,1fr);
   gap:14px;
-
 }
 
 .info-box{
-
-  background:#FFF7ED;
-
-  border:1px solid #FED7AA;
-
+  background:rgba(251,140,0,0.08);
+  border:1px solid rgba(251,140,0,0.18);
   border-radius:20px;
-
   padding:16px;
-
 }
 
 .info-box small{
-
   display:block;
-
-  font-size:12px;
-
-  color:#9A3412;
-
   margin-bottom:6px;
-
+  color:#9A3412;
+  font-size:12px;
 }
 
 .info-box strong{
-
   font-size:15px;
-
-  color:#7C2D12;
-
 }
 
 .status-pill{
-
   display:inline-flex;
-
-  align-items:center;
-
-  justify-content:center;
-
   padding:10px 16px;
-
   border-radius:999px;
-
   font-size:13px;
-
   font-weight:700;
-
+  margin-top:18px;
 }
 
 .valid{
@@ -369,48 +366,137 @@ APP
 }
 
 .presence-grid{
-
   display:grid;
-
   grid-template-columns:1fr 1fr;
-
   gap:14px;
-
-  margin-top:20px;
-
 }
 
-.btn-start{
-  background:var(--success);
-  color:white;
+.presence-btn{
+  border:none;
+  border-radius:22px;
+  padding:24px 18px;
+  cursor:pointer;
+  transition:0.2s;
 }
 
-.btn-end{
-  background:var(--danger);
+.presence-btn.active{
+  transform:scale(1.02);
+}
+
+.presence-start{
+  background:#DCFCE7;
+}
+
+.presence-end{
+  background:#FEE2E2;
+}
+
+.presence-title{
+  font-size:16px;
+  font-weight:800;
+}
+
+.presence-desc{
+  margin-top:8px;
+  color:#64748B;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.activity-item{
+  border:2px solid var(--border);
+  border-radius:20px;
+  padding:16px;
+  margin-bottom:14px;
+  transition:0.2s;
+}
+
+.activity-item.active{
+  border-color:#FB8C00;
+  background:rgba(251,140,0,0.06);
+}
+
+.activity-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.activity-top input{
+  width:20px;
+  height:20px;
+}
+
+.activity-title{
+  font-size:14px;
+  font-weight:700;
+}
+
+.activity-input{
+  margin-top:14px;
+}
+
+.activity-input input{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px 14px;
+  background:transparent;
+  color:var(--text);
+}
+
+.activity-input input:disabled{
+  opacity:0.5;
+}
+
+.ppl-list{
+  display:grid;
+  gap:12px;
+}
+
+.ppl-item{
+  border:2px solid var(--border);
+  border-radius:18px;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.submit-btn{
+  width:100%;
+  border:none;
+  border-radius:22px;
+  padding:18px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #FFA726,
+    #FB8C00
+  );
+
   color:white;
+
+  font-size:15px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  box-shadow:0 12px 26px rgba(251,140,0,0.25);
 }
 
 .footer{
-
   text-align:center;
-
-  margin-top:20px;
-
-  color:#64748B;
-
+  color:var(--muted);
   font-size:13px;
-
-  padding-bottom:20px;
-
-}
-
-.hidden{
-  display:none !important;
+  padding:12px 0 24px;
 }
 
 @media(max-width:480px){
 
-  .presence-grid{
+  .presence-grid,
+  .info-grid{
     grid-template-columns:1fr;
   }
 
@@ -420,9 +506,9 @@ APP
 </head>
 <body>
 
-<!-- =========================
+<!-- =====================
 LOADING
-========================= -->
+===================== -->
 
 <div id="loadingScreen">
 
@@ -436,10 +522,7 @@ LOADING
   </div>
 
   <div class="loading-bar-wrap">
-    <div
-      class="loading-bar"
-      id="loadingBar"
-    ></div>
+    <div class="loading-bar" id="loadingBar"></div>
   </div>
 
   <div class="loading-footer">
@@ -448,81 +531,58 @@ LOADING
 
 </div>
 
-<!-- =========================
+<!-- =====================
 LOGIN
-========================= -->
+===================== -->
 
-<div
-  class="login-page"
-  id="loginPage"
->
+<div class="login-page" id="loginPage">
 
   <div class="login-card">
 
     <div class="brand">
-
       <h1>SERBAT</h1>
-
       <p>
         Sistem Evaluasi Real-time<br>
         Berbasis Aktivitas Lapangan
       </p>
-
     </div>
 
     <div class="form-group">
-
-      <label>ID Petugas</label>
-
-      <input
-        type="text"
-        id="pplId"
-        placeholder="Contoh: PPL001"
-      >
-
+      <label>User ID</label>
+      <input type="text" id="userId" placeholder="Contoh: PPL001">
     </div>
 
     <div class="form-group">
-
       <label>Password</label>
-
-      <input
-        type="password"
-        id="password"
-      >
-
+      <input type="password" id="password" placeholder="Masukkan password">
     </div>
 
-    <button
-      class="btn btn-primary"
-      onclick="login()"
-    >
-
+    <button class="btn btn-primary" onclick="login()">
       Login SERBAT
-
     </button>
 
   </div>
 
 </div>
 
-<!-- =========================
+<!-- =====================
 APP
-========================= -->
+===================== -->
 
-<div
-  class="app"
-  id="app"
->
+<div class="app" id="app">
 
   <!-- TOPBAR -->
 
   <div class="topbar">
 
+    <button class="dark-toggle" onclick="toggleDarkMode()">
+      🌙
+    </button>
+
     <h1>SERBAT</h1>
 
     <p id="welcomeText">
-      Selamat datang
+      Memuat data petugas...
     </p>
 
   </div>
@@ -538,178 +598,62 @@ APP
     <div class="info-grid">
 
       <div class="info-box">
-
         <small>Latitude</small>
-
-        <strong id="latText">
-          -
-        </strong>
-
+        <strong id="latText">-</strong>
       </div>
 
       <div class="info-box">
-
         <small>Longitude</small>
-
-        <strong id="lngText">
-          -
-        </strong>
-
+        <strong id="lngText">-</strong>
       </div>
 
       <div class="info-box">
-
         <small>Akurasi</small>
-
-        <strong id="accuracyText">
-          -
-        </strong>
-
+        <strong id="accuracyText">-</strong>
       </div>
 
       <div class="info-box">
-
         <small>IDSUBSLS</small>
-
-        <strong id="idsubslsText">
-          -
-        </strong>
-
+        <strong id="idsubslsText">Detecting...</strong>
       </div>
 
     </div>
 
-    <div style="margin-top:18px;">
-
-      <div id="validationBadge"></div>
-
-    </div>
-
-    <div style="margin-top:18px;">
-
-      <button
-        class="btn btn-primary"
-        onclick="refreshLocation()"
-      >
-
-        Refresh GPS
-
-      </button>
-
-    </div>
+    <div id="gpsBadge"></div>
 
   </div>
 
-  <!-- AKTIVITAS -->
+  <!-- PRESENSI -->
 
   <div class="card">
 
     <div class="section-title">
-      Aktivitas Lapangan
-    </div>
-
-    <div class="form-group">
-
-      <label>Jenis Aktivitas</label>
-
-      <select id="activityType">
-
-        <option value="PK">
-          Pemutakhiran Keluarga
-        </option>
-
-        <option value="PU">
-          Pemutakhiran Usaha
-        </option>
-
-        <option value="DK">
-          Pendataan Keluarga
-        </option>
-
-        <option value="DU">
-          Pendataan Usaha
-        </option>
-
-      </select>
-
-    </div>
-
-    <div class="form-group">
-
-      <label>Jumlah Keluarga</label>
-
-      <input
-        type="number"
-        id="keluargaDone"
-      >
-
-    </div>
-
-    <div class="form-group">
-
-      <label>Jumlah Usaha</label>
-
-      <input
-        type="number"
-        id="usahaDone"
-      >
-
-    </div>
-
-    <div
-      class="form-group hidden"
-      id="invalidReasonWrapper"
-    >
-
-      <label>Alasan Invalid</label>
-
-      <select id="invalidReason">
-
-        <option value="">
-          Pilih alasan
-        </option>
-
-        <option value="SNL">
-          Sinyal GPS Lemah
-        </option>
-
-        <option value="KRT">
-          Koordinasi RT
-        </option>
-
-        <option value="AMS">
-          Akses Sulit
-        </option>
-
-      </select>
-
-    </div>
-
-    <div class="form-group">
-
-      <label>Catatan</label>
-
-      <textarea id="notes"></textarea>
-
+      Jenis Presensi
     </div>
 
     <div class="presence-grid">
 
-      <button
-        class="btn btn-start"
-        onclick="submitPresence('MULAI')"
-      >
+      <button class="presence-btn presence-start active" onclick="switchPresence('MULAI',this)">
 
-        Presensi Mulai
+        <div class="presence-title">
+          Presensi Mulai
+        </div>
+
+        <div class="presence-desc">
+          Mulai aktivitas lapangan
+        </div>
 
       </button>
 
-      <button
-        class="btn btn-end"
-        onclick="submitPresence('SELESAI')"
-      >
+      <button class="presence-btn presence-end" onclick="switchPresence('SELESAI',this)">
 
-        Presensi Selesai
+        <div class="presence-title">
+          Presensi Selesai
+        </div>
+
+        <div class="presence-desc">
+          Submit hasil kegiatan
+        </div>
 
       </button>
 
@@ -717,62 +661,185 @@ APP
 
   </div>
 
-  <!-- FOOTER -->
+  <!-- PPL FORM -->
+
+  <div class="card hidden" id="pplForm">
+
+    <div class="section-title">
+      Aktivitas PPL Hari Ini
+    </div>
+
+    <div class="activity-item" id="pkItem">
+
+      <div class="activity-top">
+
+        <input type="checkbox" id="pkCheck" onchange="toggleActivity('pk')">
+
+        <div class="activity-title">
+          Pemutakhiran Keluarga
+        </div>
+
+      </div>
+
+      <div class="activity-input">
+
+        <input type="number" disabled id="pkInput" placeholder="Jumlah keluarga">
+
+      </div>
+
+    </div>
+
+    <div class="activity-item" id="puItem">
+
+      <div class="activity-top">
+
+        <input type="checkbox" id="puCheck" onchange="toggleActivity('pu')">
+
+        <div class="activity-title">
+          Pemutakhiran Usaha
+        </div>
+
+      </div>
+
+      <div class="activity-input">
+
+        <input type="number" disabled id="puInput" placeholder="Jumlah usaha">
+
+      </div>
+
+    </div>
+
+    <div class="activity-item" id="lkItem">
+
+      <div class="activity-top">
+
+        <input type="checkbox" id="lkCheck" onchange="toggleActivity('lk')">
+
+        <div class="activity-title">
+          Pendataan Lapangan Keluarga
+        </div>
+
+      </div>
+
+      <div class="activity-input">
+
+        <input type="number" disabled id="lkInput" placeholder="Jumlah keluarga">
+
+      </div>
+
+    </div>
+
+    <div class="activity-item" id="luItem">
+
+      <div class="activity-top">
+
+        <input type="checkbox" id="luCheck" onchange="toggleActivity('lu')">
+
+        <div class="activity-title">
+          Pendataan Lapangan Usaha
+        </div>
+
+      </div>
+
+      <div class="activity-input">
+
+        <input type="number" disabled id="luInput" placeholder="Jumlah usaha">
+
+      </div>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Catatan Lapangan</label>
+
+      <textarea rows="3" id="pplNotes"></textarea>
+
+    </div>
+
+  </div>
+
+  <!-- PML FORM -->
+
+  <div class="card hidden" id="pmlForm">
+
+    <div class="section-title">
+      PPL yang Didampingi
+    </div>
+
+    <div class="ppl-list" id="pplList"></div>
+
+    <div class="form-group">
+      <label>Jumlah Keluarga Didampingi</label>
+      <input type="number" id="pmlKeluarga">
+    </div>
+
+    <div class="form-group">
+      <label>Jumlah Usaha Didampingi</label>
+      <input type="number" id="pmlUsaha">
+    </div>
+
+    <div class="form-group">
+      <label>Catatan Pengawasan</label>
+      <textarea rows="3" id="pmlNotes"></textarea>
+    </div>
+
+  </div>
+
+  <!-- SUBMIT -->
+
+  <button class="submit-btn" onclick="submitPresence()" id="submitBtn">
+    Submit Presensi Mulai
+  </button>
 
   <div class="footer">
-
     SERBAT SE2026 by yovie.wibowo
-
   </div>
 
 </div>
 
 <script>
 
-/* =========================
+/* =====================
 CONFIG
-========================= */
+===================== */
 
 const APPS_SCRIPT_URL =
 'https://script.google.com/macros/s/AKfycbz_X6U4krnGxFAc0PzZGdfE1Z9ablltBh3DHgq4r7UAtpCqMi6Zj7O2KOJv8F4760JI/exec';
 
-/* =========================
+/* =====================
 GLOBAL
-========================= */
+===================== */
+
+let currentUser = null;
+let currentPresence = 'MULAI';
 
 let currentLat = null;
 let currentLng = null;
 let currentAccuracy = null;
 
-let validationStatus = 'UNKNOWN';
-
+let validationStatus = 'VALID';
 let detectedIDSUBSLS = '-';
 
-/* =========================
+/* =====================
 LOADING
-========================= */
+===================== */
 
 const loadingBar =
-document.getElementById(
-  'loadingBar'
-);
+document.getElementById('loadingBar');
 
-let loadingProgress = 0;
+let progress = 0;
 
-const loadingInterval =
-setInterval(()=>{
+const interval = setInterval(()=>{
 
-  loadingProgress +=
-  Math.random()*20;
+  progress += Math.random()*18;
 
-  if(loadingProgress > 90){
-
-    loadingProgress = 90;
-
+  if(progress > 90){
+    progress = 90;
   }
 
   loadingBar.style.width =
-  loadingProgress + '%';
+  progress + '%';
 
 },300);
 
@@ -780,28 +847,17 @@ window.addEventListener('load',()=>{
 
   setTimeout(()=>{
 
-    clearInterval(
-      loadingInterval
-    );
+    clearInterval(interval);
 
-    loadingBar.style.width =
-    '100%';
+    loadingBar.style.width = '100%';
 
     setTimeout(()=>{
 
-      document
-      .getElementById(
-        'loadingScreen'
-      )
-      .style.opacity = '0';
+      document.getElementById('loadingScreen').style.opacity = '0';
 
       setTimeout(()=>{
 
-        document
-        .getElementById(
-          'loadingScreen'
-        )
-        .remove();
+        document.getElementById('loadingScreen').remove();
 
       },500);
 
@@ -811,71 +867,62 @@ window.addEventListener('load',()=>{
 
 });
 
-/* =========================
+/* =====================
+DARK MODE
+===================== */
+
+function toggleDarkMode(){
+
+  document.body.classList.toggle('dark');
+
+}
+
+/* =====================
 LOGIN
-========================= */
+===================== */
 
 async function login(){
 
-  const pplId =
-    document.getElementById(
-      'pplId'
-    ).value;
+  const userId =
+  document.getElementById('userId').value;
 
   const password =
-    document.getElementById(
-      'password'
-    ).value;
+  document.getElementById('password').value;
 
-  if(!pplId || !password){
-
+  if(!userId || !password){
     alert('Lengkapi login');
     return;
-
   }
 
   try{
 
-    const response =
-      await fetch(
+    const response = await fetch(
+      `${APPS_SCRIPT_URL}?action=login&user_id=${encodeURIComponent(userId)}&password=${encodeURIComponent(password)}`
+    );
 
-        `${APPS_SCRIPT_URL}?action=login&ppl_id=${encodeURIComponent(pplId)}&password=${encodeURIComponent(password)}`,
-
-        {
-          method:'GET',
-          mode:'cors'
-        }
-
-      );
-
-    const result =
-      await response.json();
-
-    console.log(result);
+    const result = await response.json();
 
     if(result.status){
 
-      localStorage.setItem(
+      currentUser = result.data;
 
-        'serbat_user',
+      document.getElementById('loginPage').style.display = 'none';
 
-        JSON.stringify(
-          result.data
-        )
+      document.getElementById('app').style.display = 'block';
 
-      );
+      document.getElementById('welcomeText').innerHTML = `
+        ${currentUser.nama}<br>
+        ${currentUser.role}
+      `;
 
-      showApp();
+      getLocation();
+
+      loadPMLAssignments();
 
     }
 
     else{
-
-      alert(
-        result.message ||
-        'Login gagal'
-      );
-
+      alert(result.message || 'Login gagal');
     }
 
   }
@@ -884,79 +931,29 @@ async function login(){
 
     console.error(err);
 
-    alert(
-      'Koneksi server gagal'
-    );
+    alert('Koneksi server gagal');
 
   }
 
 }
 
-function showApp(){
-
-  document
-  .getElementById(
-    'loginPage'
-  )
-  .style.display = 'none';
-
-  document
-  .getElementById(
-    'app'
-  )
-  .style.display = 'block';
-
-  const user =
-    JSON.parse(
-
-      localStorage.getItem(
-        'serbat_user'
-      )
-
-    );
-
-  document
-  .getElementById(
-    'welcomeText'
-  )
-  .innerHTML = `
-
-    ${user.nama}<br>
-    ${user.role}
-
-  `;
-
-  getLocation();
-
-}
-
-function logout(){
-
-  localStorage.removeItem(
-    'serbat_user'
-  );
-
-  location.reload();
-
-}
-
-/* =========================
+/* =====================
 GPS
-========================= */
-
-function refreshLocation(){
-
-  getLocation();
-
-}
+===================== */
 
 function getLocation(){
 
-  navigator.geolocation
-  .getCurrentPosition(
+  if(!navigator.geolocation){
+
+    alert('GPS tidak didukung browser');
+
+    return;
+
+  }
+
+  navigator.geolocation.getCurrentPosition(
 
     successLocation,
-
     errorLocation,
 
     {
@@ -971,68 +968,18 @@ function getLocation(){
 
 function successLocation(position){
 
-  currentLat =
-    position.coords.latitude;
+  currentLat = position.coords.latitude;
+  currentLng = position.coords.longitude;
+  currentAccuracy = position.coords.accuracy;
 
-  currentLng =
-    position.coords.longitude;
+  document.getElementById('latText').innerText =
+  currentLat.toFixed(6);
 
-  currentAccuracy =
-    position.coords.accuracy;
+  document.getElementById('lngText').innerText =
+  currentLng.toFixed(6);
 
-  document
-  .getElementById(
-    'latText'
-  )
-  .innerText =
-    currentLat.toFixed(6);
-
-  document
-  .getElementById(
-    'lngText'
-  )
-  .innerText =
-    currentLng.toFixed(6);
-
-  document
-  .getElementById(
-    'accuracyText'
-  )
-  .innerText =
-    Math.round(
-      currentAccuracy
-    ) + 'm';
-
-  // sementara dummy
-  detectedIDSUBSLS =
-    '6171010001';
-
-  document
-  .getElementById(
-    'idsubslsText'
-  )
-  .innerText =
-    detectedIDSUBSLS;
-
-  validateGPS();
-
-}
-
-function errorLocation(error){
-
-  console.error(error);
-
-  alert(
-    'GPS gagal diakses'
-  );
-
-}
-
-/* =========================
-VALIDASI
-========================= */
-
-function validateGPS(){
+  document.getElementById('accuracyText').innerText =
+  Math.round(currentAccuracy) + ' meter';
 
   if(currentAccuracy <= 30){
 
@@ -1052,231 +999,190 @@ function validateGPS(){
 
   }
 
-  renderValidation();
+  renderGPSStatus();
 
 }
 
-function renderValidation(){
+function errorLocation(error){
+
+  console.error(error);
+
+  alert('GPS gagal diakses');
+
+}
+
+function renderGPSStatus(){
 
   const badge =
-    document.getElementById(
-      'validationBadge'
-    );
+  document.getElementById('gpsBadge');
 
-  badge.innerHTML = '';
-
-  const pill =
-    document.createElement('div');
-
-  pill.classList.add(
-    'status-pill'
-  );
+  let html = '';
 
   if(validationStatus === 'VALID'){
 
-    pill.classList.add(
-      'valid'
-    );
-
-    pill.innerHTML =
-      'VALID GPS';
-
-    document
-    .getElementById(
-      'invalidReasonWrapper'
-    )
-    .classList.add(
-      'hidden'
-    );
+    html = `
+      <div class="status-pill valid">
+        VALID GPS
+      </div>
+    `;
 
   }
 
-  else if(
-    validationStatus === 'WARNING'
-  ){
+  else if(validationStatus === 'WARNING'){
 
-    pill.classList.add(
-      'warning'
-    );
-
-    pill.innerHTML =
-      'WARNING GPS';
-
-    document
-    .getElementById(
-      'invalidReasonWrapper'
-    )
-    .classList.add(
-      'hidden'
-    );
+    html = `
+      <div class="status-pill warning">
+        WARNING GPS
+      </div>
+    `;
 
   }
 
   else{
 
-    pill.classList.add(
-      'invalid'
-    );
-
-    pill.innerHTML =
-      'INVALID GPS';
-
-    document
-    .getElementById(
-      'invalidReasonWrapper'
-    )
-    .classList.remove(
-      'hidden'
-    );
+    html = `
+      <div class="status-pill invalid">
+        INVALID GPS
+      </div>
+    `;
 
   }
 
-  badge.appendChild(pill);
+  badge.innerHTML = html;
 
 }
 
-/* =========================
-SUBMIT
-========================= */
+/* =====================
+PRESENCE
+===================== */
 
-async function submitPresence(type){
+function switchPresence(type,el){
 
-  if(!currentLat || !currentLng){
+  currentPresence = type;
 
-    alert('GPS belum tersedia');
+  document
+  .querySelectorAll('.presence-btn')
+  .forEach(btn=>{
+
+    btn.classList.remove('active');
+
+  });
+
+  el.classList.add('active');
+
+  renderPresence();
+
+}
+
+function renderPresence(){
+
+  document.getElementById('pplForm').classList.add('hidden');
+  document.getElementById('pmlForm').classList.add('hidden');
+
+  const submitBtn =
+  document.getElementById('submitBtn');
+
+  if(currentPresence === 'MULAI'){
+
+    submitBtn.innerText =
+    'Submit Presensi Mulai';
 
     return;
 
   }
 
-  const user =
-    JSON.parse(
+  submitBtn.innerText =
+  'Submit Presensi Selesai';
 
-      localStorage.getItem(
-        'serbat_user'
-      )
+  if(currentUser.role === 'PPL'){
 
-    );
+    document.getElementById('pplForm').classList.remove('hidden');
 
-  const payload = {
+  }
 
-    action:'submit_presence',
+  else if(currentUser.role === 'PML'){
 
-    ppl_id:user.ppl_id,
-    nama:user.nama,
-    role:user.role,
+    document.getElementById('pmlForm').classList.remove('hidden');
 
-    jenis_presensi:type,
+  }
 
-    activity_id:
-    document.getElementById(
-      'activityType'
-    ).value,
+}
 
-    latitude:currentLat,
-    longitude:currentLng,
+/* =====================
+ACTIVITY
+===================== */
 
-    gps_accuracy:currentAccuracy,
+function toggleActivity(type){
 
-    validation_status:
-    validationStatus,
+  const check =
+  document.getElementById(type + 'Check');
 
-    idsubsls_detected:
-    detectedIDSUBSLS,
+  const input =
+  document.getElementById(type + 'Input');
 
-    idsubsls_expected:
-    detectedIDSUBSLS,
+  const item =
+  document.getElementById(type + 'Item');
 
-    distance_meter:0,
+  if(check.checked){
 
-    invalid_reason:
-    document.getElementById(
-      'invalidReason'
-    ).value,
+    input.disabled = false;
 
-    keluarga_done:
-    document.getElementById(
-      'keluargaDone'
-    ).value || 0,
+    item.classList.add('active');
 
-    usaha_done:
-    document.getElementById(
-      'usahaDone'
-    ).value || 0,
+  }
 
-    notes:
-    document.getElementById(
-      'notes'
-    ).value,
+  else{
 
-    user_agent:
-    navigator.userAgent,
+    input.disabled = true;
 
-    device_info:
-    navigator.platform
+    input.value = '';
 
-  };
+    item.classList.remove('active');
+
+  }
+
+}
+
+/* =====================
+PML ASSIGNMENT
+===================== */
+
+async function loadPMLAssignments(){
+
+  if(!currentUser) return;
+
+  if(currentUser.role !== 'PML') return;
 
   try{
 
-    const query =
-      new URLSearchParams(
-        payload
-      );
+    const response = await fetch(
+      `${APPS_SCRIPT_URL}?action=get_assignment&pml_id=${currentUser.user_id}`
+    );
 
-    const response =
-      await fetch(
+    const result = await response.json();
 
-        APPS_SCRIPT_URL +
-        '?' +
-        query.toString(),
+    const container =
+    document.getElementById('pplList');
 
-        {
-          method:'GET',
-          mode:'cors'
-        }
+    container.innerHTML = '';
 
-      );
+    result.data.forEach(item=>{
 
-    const result =
-      await response.json();
+      container.innerHTML += `
 
-    console.log(result);
+        <div class="ppl-item">
 
-    if(result.status){
+          <input type="checkbox">
 
-      alert(
-        `Presensi ${type} berhasil`
-      );
+          <div>
+            ${item.ppl_id} - ${item.nama_ppl}
+          </div>
 
-      document
-      .getElementById(
-        'keluargaDone'
-      )
-      .value = '';
+        </div>
 
-      document
-      .getElementById(
-        'usahaDone'
-      )
-      .value = '';
+      `;
 
-      document
-      .getElementById(
-        'notes'
-      )
-      .value = '';
-
-    }
-
-    else{
-
-      alert(
-        result.message ||
-        'Submit gagal'
-      );
-
-    }
+    });
 
   }
 
@@ -1284,32 +1190,19 @@ async function submitPresence(type){
 
     console.error(err);
 
-    alert(
-      'Gagal submit presensi'
-    );
-
   }
 
 }
 
-/* =========================
-AUTO LOGIN
-========================= */
+/* =====================
+SUBMIT
+===================== */
 
-window.onload = ()=>{
+async function submitPresence(){
 
-  const user =
-    localStorage.getItem(
-      'serbat_user'
-    );
+  alert('Integrasi submit presence siap dikembangkan 😌');
 
-  if(user){
-
-    showApp();
-
-  }
-
-};
+}
 
 </script>
 </body>
